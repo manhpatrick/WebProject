@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Ca Nhan - SportClothes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="static/profile.css">
+</head>
+<body>
+    <div class="header">
+        <div class="header-top">
+            <div class="header-links">
+                <a href="index.html"><i class="fas fa-home"></i> Trang chủ</a>
+                <a href="#"><i class="fas fa-question-circle"></i> Hỗ trợ</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="sidebar">
+            <h3>Tài khoản của tôi</h3>
+            <div class="menu-item active" onclick="showSection('info')">
+                <i class="fas fa-user"></i>
+                <span>Thông tin cá nhân</span>
+            </div>
+            <div class="menu-item" onclick="showSection('orders')">
+                <i class="fas fa-shopping-bag"></i>
+                <span>Lịch sử đơn hàng</span>
+            </div>
+            <div class="menu-item" onclick="showSection('cart')">
+                <i class="fas fa-cart-shopping"></i>
+                <span>Giỏ hàng của tôi</span>
+            </div>
+            <div class="menu-item" onclick="showSection('address')">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Địa chỉ của tôi</span>
+            </div>
+            <div class="menu-item">
+                <a href="index.html" onclick="logout();">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Đăng xuất</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="content">
+            <div id="info" class="content-section active">
+                <h2 class="section-title">Thông tin cá nhân</h2>
+                <div class="info-grid" id="profileInfoGrid"></div>
+
+                <form id="profileForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Họ và tên *</label>
+                            <input type="text" name="username" id="profileUsername" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Số điện thoại *</label>
+                            <input type="text" name="phone" id="profilePhone" required>
+                            <small id="profilePhoneError" class="field-error" style="display:none;"></small>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Ngày sinh</label>
+                            <input type="date" name="birthdate" id="profileBirthdate">
+                        </div>
+                        <div class="form-group">
+                            <label>Giới tính</label>
+                            <select name="gender" id="profileGender">
+                                <option value="">-- Chọn giới tính --</option>
+                                <option value="Nam">Nam</option>
+                                <option value="Nữ">Nữ</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Lưu thay đổi
+                    </button>
+                </form>
+            </div>
+
+            <div id="cart" class="content-section">
+                <h2 class="section-title"><i class="fas fa-cart-shopping"></i> Giỏ hàng của tôi</h2>
+                <div id="cartContainer"></div>
+            </div>
+
+            <div id="orders" class="content-section">
+                <h2 class="section-title"><i class="fas fa-shopping-bag"></i>Lịch sử đơn hàng</h2>
+                <div id="orderContainer"></div>
+            </div>
+
+            <div id="address" class="content-section">
+                <h2 class="section-title">Địa chỉ của tôi</h2>
+                <div id="addressListView" class="address-view active">
+                    <div class="address-grid" id="addressContainer"></div>
+                </div>
+
+                <div id="addressFormView" class="address-view">
+                    <div class="address-form-card">
+                        <div class="form-header">
+                            <i class="fas fa-plus-circle"></i>
+                            <h3 id="addressFormTitle">Thêm địa chỉ mới</h3>
+                        </div>
+
+                        <form id="addressForm" class="address-form">
+                            <div class="form-group full-width">
+                                <label for="addressStreet"><i class="fas fa-road"></i> Số nhà, tên đường <span class="required">*</span></label>
+                                <input type="text" id="addressStreet" placeholder="Số 123, Đường Giải Phóng" required>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="addressWard"><i class="fas fa-map-pin"></i> Phường/Xã <span class="required">*</span></label>
+                                    <input type="text" id="addressWard" placeholder="Phường Bách Khoa" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="addressDistrict"><i class="fas fa-building"></i> Quận/Huyện <span class="required">*</span></label>
+                                    <input type="text" id="addressDistrict" placeholder="Hai Bà Trưng" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="addressCity"><i class="fas fa-city"></i> Tỉnh/Thành phố <span class="required">*</span></label>
+                                <select id="addressCity" required>
+                                    <option value="" disabled selected >-- Chọn Tỉnh/Thành phố --</option>
+                                    <option value="Hà Nội">Hà Nội</option>
+                                    <option value="TP. Hồ Chí Minh">TP. Hồ Chí Minh</option>
+                                </select>
+                            </div>
+
+                            <input type="hidden" id="addressId">
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-secondary" onclick="resetAddressForm()"><i class="fas fa-times"></i> Hủy</button>
+                                <button type="submit" class="btn btn-primary"><i class="fas fa-check-circle"></i> Lưu địa chỉ</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+
+    const DEMO_AUTH_KEY = 'demo_auth_user';
+    let orders = [];
+    let addresses = [];
+    let cartItems = [];
+    let currentProfile = {};
+    const ORDER_PAGE_SIZE = 5;
+    let currentOrderPage = 1;
+    const expandedOrderIds = new Set();
+
+    function getAuthToken() {
+        const raw = localStorage.getItem(DEMO_AUTH_KEY);
+        if (!raw) return '';
+        try {
+            const parsed = JSON.parse(raw);
+            if (typeof parsed === 'string') return parsed;
+            return parsed.token || parsed.accessToken || '';
+        } catch (error) {
+            return raw;
+        }
+    }
+
+    function logout() {
+        localStorage.removeItem(DEMO_AUTH_KEY);
+    }
+
+    function showSection(sectionId) {
+        const sections = document.querySelectorAll('.content-section');
+        sections.forEach((section) => section.classList.remove('active'));
+
+        const menuItems = document.querySelectorAll('.menu-item');
+        menuItems.forEach((item) => item.classList.remove('active'));
+
+        const selectedSection = document.getElementById(sectionId);
+        if (selectedSection) selectedSection.classList.add('active');
+
+        const activeMenuItem = document.querySelector(`.menu-item[onclick=\"showSection('${sectionId}')\"]`);
+        if (activeMenuItem) activeMenuItem.classList.add('active');
+        window.location.hash = sectionId;
+    }
+
+    function formatDate(isoDate) {
+        if (!isoDate) return '--';
+        return new Date(isoDate).toLocaleDateString('vi-VN');
+    }
+
+    function formatVnd(value) {
+        return Number(value || 0).toLocaleString('vi-VN') + 'đ';
+    }
+
+    function formatPhone(value) {
+        const phone = String(value || '').trim();
+        return phone || '--';
+    }
+
+    function escapeHtml(value) {
+        return String(value || '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
+    function getDisplayName() {
+        return String(currentProfile.username || '').trim() || 'Mạnh';
+    }
+
+    function getDisplayPhone() {
+        const rawPhone = String(currentProfile.phone || '').trim();
+        return rawPhone ? rawPhone : '(+84) --- --- ---';
+    }
+
+    function normalizePhone(value) {
+        return String(value || '').trim().replace(/[\s.-]/g, '');
+    }
+
+    function isValidVietnamesePhone(value) {
+        const normalized = normalizePhone(value);
+        return /^(?:\+84|84|0)(3|5|7|8|9)\d{8}$/.test(normalized);
+    }
+
+    function setPhoneError(message) {
+        const phoneInput = document.getElementById('profilePhone');
+        const phoneError = document.getElementById('profilePhoneError');
+        if (!phoneInput || !phoneError) return;
+
+        if (message) {
+            phoneInput.classList.add('input-error');
+            phoneError.textContent = message;
+            phoneError.style.display = 'block';
+            return;
+        }
+
+        phoneInput.classList.remove('input-error');
+        phoneError.textContent = '';
+        phoneError.style.display = 'none';
+    }
+
+    function validatePhoneField(value, showEmptyError = false) {
+        const normalized = normalizePhone(value);
+
+        if (!normalized) {
+            if (showEmptyError) {
+                setPhoneError('Vui lòng nhập số điện thoại');
+                return false;
+            }
+            setPhoneError('');
+            return true;
+        }
+
+        if (!isValidVietnamesePhone(normalized)) {
+            setPhoneError('Số điện thoại không hợp lệ');
+            return false;
+        }
+
+        setPhoneError('');
+        return true;
+    }
+
+    function getOrderStatusLabel(status) {
+        const map = {
+            pending: 'Pending',
+            confirmed: 'Confirmed',
+            shipped: 'Shipped',
+            delivered: 'Delivered',
+            cancelled: 'Cancelled'
+        };
+        const normalized = String(status || '').toLowerCase();
+        return map[normalized] || normalized || '--';
+    }
+
+    function getOrderStatusClass(status) {
+        const normalized = String(status || '').toLowerCase();
+        const map = {
+            pending: 'status-pending',
+            confirmed: 'status-confirmed',
+            shipped: 'status-shipped',
+            delivered: 'status-delivered',
+            cancelled: 'status-cancelled'
+        };
+        return map[normalized] || 'status-pending';
+    }
+
+    function getOrderStatusIcon(status) {
+        const normalized = String(status || '').toLowerCase();
+        const map = {
+            pending: 'fa-hourglass-half',
+            confirmed: 'fa-circle-check',
+            shipped: 'fa-truck-fast',
+            delivered: 'fa-box-open',
+            cancelled: 'fa-circle-xmark'
+        };
+        return map[normalized] || 'fa-circle-info';
+    }
+
+    async function fetchProfileData() {
+        const token = getAuthToken();
+        if (!token) return null;
+        try {
+            const res = await fetch('/api/profiles', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+            })
+            if (!res.ok) {
+                throw new Error('Failed to fetch profile data');
+            }
+            const contentType = res.headers.get('content-type') || '';
+            if (!contentType.includes('application/json')) {
+                throw new Error('API trả về dữ liệu không hợp lệ (không phải JSON)');
+            }
+            const data = await res.json();
+            return data;
+        } catch(error) {
+            console.error('Error fetching profile data:', error);
+            return null;
+        }
+    }
+
+    function renderProfile(userData){
+        if (!userData) {
+            console.warn('No user data to render');
+            return;
+        }
+        currentProfile = userData;
+        const profileInfoGrid = document.getElementById('profileInfoGrid');
+        const usernameInput = document.getElementById('profileUsername');
+        const phoneInput = document.getElementById('profilePhone');
+        const genderSelect = document.getElementById('profileGender');
+        const birthdateInput = document.getElementById('profileBirthdate');
+        const headerUserName = document.getElementById('headerUserName');
+
+        const username = String(userData.username || '').trim();
+        const phone = String(userData.phone || '').trim();
+        const birthdate = userData.birthdate || '';
+        const gender = userData.gender || '';
+
+        if (profileInfoGrid) {
+            profileInfoGrid.innerHTML = `
+                <div class="info-item">
+                    <div class="info-label">Họ và tên</div>
+                    <div class="info-value">${username || '--'}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Số điện thoại</div>
+                    <div class="info-value">${formatPhone(phone)}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Ngày sinh</div>
+                    <div class="info-value">${formatDate(birthdate)}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Giới tính</div>
+                    <div class="info-value">${gender || '--'}</div>
+                </div>
+            `;
+        }
+
+        if (usernameInput) usernameInput.value = username;
+        if (phoneInput) phoneInput.value = phone;
+        if (genderSelect) genderSelect.value = gender;
+        if (birthdateInput) birthdateInput.value = birthdate ? new Date(birthdate).toISOString().split('T')[0] : '';
+        if (headerUserName) headerUserName.textContent = username || 'Mạnh';
+        setPhoneError('');
+        loadAddress();
+    }
+
+    async function loadProfile(){
+        const payload = await fetchProfileData();
+        if (!payload) {
+            return;
+        }
+        const userData = payload.data || {};
+        renderProfile(userData);
+    }
+
+    document.addEventListener('submit', async function(event) {
+        if (event.target.id === 'profileForm') {
+            event.preventDefault();
+            const username = document.getElementById('profileUsername').value.trim();
+            const phone = document.getElementById('profilePhone').value.trim();
+            const normalizedPhone = normalizePhone(phone);
+            const gender = document.getElementById('profileGender').value || '';
+            const birthdate = document.getElementById('profileBirthdate').value || '';
+            const token = getAuthToken();
+
+            if (!validatePhoneField(phone, true)) {
+                return;
+            }
+
+            if (!token) {
+                alert('Bạn chưa đăng nhập. Vui lòng đăng nhập lại để lưu thay đổi.');
+                return;
+            }
+
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.style.opacity = '0.7';
+            }
+
+            try {
+                const request = await fetch('/api/profiles', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`                        
+                    },
+                    body: JSON.stringify({ username, phone: normalizedPhone, gender, birthdate }),
+                });
+                const contentType = request.headers.get('content-type') || '';
+                if (!contentType.includes('application/json')) {
+                    throw new Error('API trả về dữ liệu không hợp lệ (không phải JSON)');
+                }
+                const data = await request.json();
+                if (!request.ok || data.success === false) {
+                    throw new Error(data.message || 'Failed to update profile');
+                }
+                alert('Cập nhật thông tin cá nhân thành công!');
+                await loadProfile();
+            } catch (error) {
+                console.error('Error updating profile:', error);
+                if (String(error.message || '').toLowerCase().includes('số điện thoại')) {
+                    setPhoneError(error.message);
+                }
+                alert(error.message || 'Cập nhật thông tin thất bại');
+            } finally {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.style.opacity = '1';
+                }
+            }
+        }
+    });
+
+    async function fetchOrders() {
+        const token = getAuthToken();
+        if (!token) return [];
+
+        try {
+            const res = await fetch('/api/orders', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            const payload = await res.json();
+            if (!res.ok || payload.success === false) {
+                throw new Error(payload.message || 'Failed to fetch orders');
+            }
+
+            return Array.isArray(payload.data) ? payload.data : [];
+        } catch (error) {
+            console.error('Error fetching orders:', error);
+            alert(error.message || 'Không thể tải danh sách đơn hàng');
+            return [];
+        }
+    }
+
+    function renderOrders(orderData) {
+        const orderContainer = document.getElementById('orderContainer');
+        if (!orderContainer) return;
+
+        if (!Array.isArray(orderData) || orderData.length === 0) {
+            orderContainer.innerHTML = '<p style="color:#6b7280;">Bạn chưa có đơn hàng nào.</p>';
+            return;
+        }
+
+        const totalPages = Math.max(Math.ceil(orderData.length / ORDER_PAGE_SIZE), 1);
+        if (currentOrderPage > totalPages) currentOrderPage = totalPages;
+        if (currentOrderPage < 1) currentOrderPage = 1;
+
+        const startIndex = (currentOrderPage - 1) * ORDER_PAGE_SIZE;
+        const pageOrders = orderData.slice(startIndex, startIndex + ORDER_PAGE_SIZE);
+
+        const htmlString = pageOrders.map((order, index) => {
+            const statusKey = String(order.status || '').toLowerCase();
+            const canCancel = ['pending', 'confirmed'].includes(statusKey);
+            const canConfirmReceive = statusKey === 'shipped';
+            const orderId = order._id || '';
+            const orderDisplayId = `#${startIndex + index + 1}`;
+            const createdAt = formatDate(order.createdAt);
+            const totalAmount = formatVnd(order.total_price);
+            const statusLabel = getOrderStatusLabel(order.status);
+            const statusClass = getOrderStatusClass(order.status);
+            const statusIcon = getOrderStatusIcon(order.status);
+            const orderItems = Array.isArray(order.order_items) ? order.order_items : [];
+            const isExpanded = expandedOrderIds.has(orderId);
+            const visibleItems = isExpanded ? orderItems : orderItems.slice(0, 2);
+            const itemsHtml = visibleItems.map((item) => {
+                const product = item.product || {};
+                const itemTotal = formatVnd(Number(item.price || 0) * Number(item.quantity || 0));
+                return `
+                    <div class="order-item" style="margin-bottom:8px;">
+                        <div class="item-details">
+                            <div class="item-name">${escapeHtml(product.name || 'Sản phẩm')}</div>
+                            <div class="item-info">Số lượng: ${item.quantity || 0} | Đơn giá: ${formatVnd(item.price)} | Thành tiền: ${itemTotal}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            const toggleBtn = orderItems.length > 2
+                ? `<button class="order-toggle-btn" onclick="toggleOrderDetails('${orderId}')">${isExpanded ? 'Thu gọn' : `Xem thêm ${orderItems.length - 2} sản phẩm`}</button>`
+                : '';
+
+            return `
+                <div class="order-card">
+                    <div class="order-header">
+                        <div>
+                            <div class="order-id">Order ${orderDisplayId}</div>
+                            <div style="color:#777; font-size:0.9rem; margin-top:0.3rem;">Ngày đặt: ${createdAt}</div>
+                        </div>
+                        <span class="order-status ${statusClass}"><i class="fas ${statusIcon}"></i><span>${statusLabel}</span></span>
+                    </div>
+                    <div class="order-items">${itemsHtml}</div>
+                    ${toggleBtn}
+                    <div class="order-total"><span class="total-label">Tổng tiền:</span><span class="total-amount">${totalAmount}</span></div>
+                    <div class="order-actions">
+                        ${canCancel ? `<button class="btn btn-small order-cancel-btn" onclick="cancelOrder('${orderId}')"><i class="fas fa-ban"></i><span>Hủy đơn</span></button>` : ''}
+                        ${canConfirmReceive ? `<button class="btn btn-primary btn-small order-confirm-btn" onclick="confirmReceived('${orderId}')"><i class="fas fa-box"></i><span>Đã nhận hàng</span></button>` : ''}
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        const paginationHtml = totalPages > 1
+            ? `
+                <div class="order-pagination">
+                    <button class="btn btn-small order-page-btn" ${currentOrderPage <= 1 ? 'disabled' : ''} onclick="changeOrderPage(-1)"><i class="fas fa-chevron-left"></i><span>Trang trước</span></button>
+                    <span class="order-page-indicator"><i class="fas fa-bookmark"></i> Trang ${currentOrderPage}/${totalPages}</span>
+                    <button class="btn btn-small order-page-btn" ${currentOrderPage >= totalPages ? 'disabled' : ''} onclick="changeOrderPage(1)"><span>Trang sau</span><i class="fas fa-chevron-right"></i></button>
+                </div>
+            `
+            : '';
+
+        orderContainer.innerHTML = htmlString + paginationHtml;
+    }
+
+    async function loadOrders() {
+        const fetchedOrders = await fetchOrders();
+        orders = [...fetchedOrders].sort((a, b) => {
+            return new Date(a.createdAt || 0) - new Date(b.createdAt || 0);
+        });
+        currentOrderPage = 1;
+        expandedOrderIds.clear();
+        renderOrders(orders);
+    }
+
+    function changeOrderPage(delta) {
+        currentOrderPage += delta;
+        renderOrders(orders);
+        const orderContainer = document.getElementById('orderContainer');
+        if (orderContainer) {
+            orderContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+
+    function toggleOrderDetails(orderId) {
+        if (!orderId) return;
+        if (expandedOrderIds.has(orderId)) {
+            expandedOrderIds.delete(orderId);
+        } else {
+            expandedOrderIds.add(orderId);
+        }
+        renderOrders(orders);
+    }
+
+    async function fetchCartItems() {
+        const token = getAuthToken();
+        if (!token) return [];
+
+        try {
+            const res = await fetch('/api/cart', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (!res.ok) {
+                throw new Error('Khong the tai gio hang');
+            }
+
+            const payload = await res.json();
+            return Array.isArray(payload.data) ? payload.data : [];
+        } catch (error) {
+            console.error('Error fetching cart:', error);
+            return [];
+        }
+    }
+
+    async function updateCartItemQuantity(itemId, quantity) {
+        const token = getAuthToken();
+        if (!token) {
+            throw new Error('Ban chua dang nhap');
+        }
+
+        const request = await fetch(`/api/cart/${encodeURIComponent(itemId)}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ quantity })
+        });
+
+        const data = await request.json();
+        if (!request.ok || data.success === false) {
+            throw new Error(data.message || 'Khong the cap nhat so luong');
+        }
+    }
+
+    async function deleteCartItem(productId) {
+        const token = getAuthToken();
+        if (!token) {
+            throw new Error('Ban chua dang nhap');
+        }
+
+        const request = await fetch(`/api/cart/${encodeURIComponent(productId)}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        const data = await request.json();
+        if (!request.ok || data.success === false) {
+            throw new Error(data.message || 'Khong the xoa san pham');
+        }
+    }
+
+    async function changeCartItemQuantity(itemId, nextQuantity) {
+        const safeQuantity = Math.max(Number(nextQuantity) || 1, 1);
+        try {
+            await updateCartItemQuantity(itemId, safeQuantity);
+            await loadCart();
+        } catch (error) {
+            alert(error.message || 'Cap nhat so luong that bai');
+        }
+    }
+
+    async function removeCartItem(productId) {
+        if (!confirm('Ban chac chan muon xoa san pham khoi gio?')) return;
+
+        try {
+            await deleteCartItem(productId);
+            await loadCart();
+        } catch (error) {
+            alert(error.message || 'Xoa san pham that bai');
+        }
+    }
+
+    function goToCheckoutPage() {
+        window.location.href = '/purchase.html';
+    }
+
+    function renderCart() {
+        const cartContainer = document.getElementById('cartContainer');
+        if (!cartContainer) return;
+
+        if (!Array.isArray(cartItems) || cartItems.length === 0) {
+            cartContainer.innerHTML = '<p style="color:#6b7280;">Gio hang trong. Hay chon them san pham o trang chu.</p>';
+            return;
+        }
+
+        const total = cartItems.reduce((sum, item) => {
+            const price = Number(item?.product?.price || 0);
+            const quantity = Number(item?.quantity || 1);
+            return sum + (price * quantity);
+        }, 0);
+
+        const itemsHtml = cartItems.map((item) => {
+            const product = item.product || {};
+            const productId = product._id || '';
+            const itemId = item._id || '';
+            const name = escapeHtml(product.name || 'San pham');
+            const rawImage = String(product.image || product.image_url || '').trim().replace(/\\/g, '/');
+            const image = escapeHtml(rawImage || 'static/image/adidas3_yU6oRwT.jpeg');
+            const quantity = Math.max(Number(item.quantity) || 1, 1);
+            const price = Number(product.price || 0);
+
+            return `
+                <div class="cart-item">
+                    <img src="${image}" alt="${name}" onerror="this.src='static/image/adidas3_yU6oRwT.jpeg'">
+                    <div class="item-info">
+                        <div class="item-name">${name}</div>
+                        <div class="cart-controls-row">
+                            <div class="header__cart-qty profile-cart-qty">
+                            <button type="button" class="header__cart-qty-btn" onclick="changeCartItemQuantity('${itemId}', ${Math.max(quantity - 1, 1)})" ${quantity <= 1 ? 'disabled' : ''}>-</button>
+                            <span class="quantity">${quantity}</span>
+                            <button type="button" class="header__cart-qty-btn" onclick="changeCartItemQuantity('${itemId}', ${quantity + 1})">+</button>
+                            </div>
+                            <button type="button" class="header__cart-remove-btn profile-remove-btn" onclick="removeCartItem('${productId}')" aria-label="Xoa san pham">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="item-price">${formatVnd(price)}</div>
+                </div>
+            `;
+        }).join('');
+
+        cartContainer.innerHTML = `
+            ${itemsHtml}
+            <div class="cart-summary-row">
+                <div class="order-total"><span class="total-label">Tong tam tinh:</span><span class="total-amount">${formatVnd(total)}</span></div>
+                <button type="button" class="profile-checkout-btn" onclick="goToCheckoutPage()">
+                    Thanh toan
+                </button>
+            </div>
+        `;
+    }
+
+    async function loadCart() {
+        cartItems = await fetchCartItems();
+        renderCart();
+    }
+
+    async function cancelOrder(orderId) {
+        if (!confirm('Bạn chắc chắn muốn hủy đơn hàng này?')) return;
+        const token = getAuthToken();
+        if (!token) {
+            alert('Bạn chưa đăng nhập. Vui lòng đăng nhập lại.');
+            return;
+        }
+
+        try {
+            const request = await fetch(`/api/orders/${encodeURIComponent(orderId)}/cancel`, {
+                method: 'PATCH',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            const data = await request.json();
+            if (!request.ok || data.success === false) {
+                throw new Error(data.message || 'Không thể hủy đơn hàng');
+            }
+
+            alert('Hủy đơn hàng thành công!');
+            await loadOrders();
+        } catch (error) {
+            console.error('Error cancelling order:', error);
+            alert(error.message || 'Có lỗi xảy ra khi hủy đơn hàng.');
+        }
+    }
+
+    async function confirmReceived(orderId) {
+        if (!confirm('Xác nhận bạn đã nhận được đơn hàng này?')) return;
+        const token = getAuthToken();
+        if (!token) {
+            alert('Bạn chưa đăng nhập. Vui lòng đăng nhập lại.');
+            return;
+        }
+
+        try {
+            const request = await fetch(`/api/orders/${encodeURIComponent(orderId)}/received`, {
+                method: 'PATCH',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            const data = await request.json();
+            if (!request.ok || data.success === false) {
+                throw new Error(data.message || 'Không thể xác nhận nhận hàng');
+            }
+
+            alert('Đã xác nhận nhận hàng thành công!');
+            await loadOrders();
+        } catch (error) {
+            console.error('Error confirming received order:', error);
+            alert(error.message || 'Có lỗi xảy ra khi xác nhận nhận hàng.');
+        }
+    }
+
+    async function fetchAddress(){
+        const token = getAuthToken();
+        if (!token) return null;
+        try{
+            const response = await fetch('/api/profiles/address', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            if (!response.ok) {
+                throw new Error('Failed to fetch addresses');
+            }
+            const data = await response.json();
+            return data
+        } catch (error) {
+            console.error('Error fetching addresses:', error);
+            return null;
+        }
+    }
+
+    async function renderAddress(addresses) {
+        const addressContainer = document.getElementById('addressContainer');
+        if (!addressContainer) {
+            return;
+        }
+        if (!Array.isArray(addresses) || addresses.length === 0) {
+            addressContainer.innerHTML = `
+                <button type="button" class="address-add-card" onclick="openAddressForm()">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Thêm địa chỉ mới</span>
+                </button>
+            `;
+            return;
+        };
+        const htmlString = addresses.map(address => {
+            const fullAddress = `${address.street}, ${address.ward}, ${address.district}, ${address.city}`;
+            return `
+                <div class="address-card">
+                    <div class="address-details">
+                        <div class="address-line">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>${escapeHtml(fullAddress)}</span>
+                        </div>
+                    </div>
+                    <div class="address-actions">
+                        <button class="btn btn-primary btn-small" onclick='editAddress(${JSON.stringify(address).replace(/'/g, "&#39;")})'>
+                            <i class="fas fa-edit"></i> Sửa
+                        </button>
+                        <button class="btn btn-secondary btn-small" onclick="deleteAddress('${address._id}')">
+                            <i class="fas fa-trash"></i> Xóa
+                        </button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+        addressContainer.innerHTML = htmlString + renderAddAddressCard();
+    }
+     
+    async function loadAddress() {
+        const payload = await fetchAddress();
+        if (!payload) {
+            renderAddress([]);
+            return;
+        }
+        const addressData = payload.data || [];
+        renderAddress(addressData);
+    }
+
+    document.addEventListener('submit', async function(event) {
+        if (event.target.id === 'addressForm') {
+            event.preventDefault();
+            const addressId = document.getElementById('addressId').value.trim();
+            const street = document.getElementById('addressStreet').value.trim();
+            const ward = document.getElementById('addressWard').value.trim();
+            const district = document.getElementById('addressDistrict').value.trim();
+            const city = document.getElementById('addressCity').value.trim();
+            const token = getAuthToken();
+
+            if (!token) {
+                alert('Bạn chưa đăng nhập. Vui lòng đăng nhập lại để lưu thay đổi.');
+                return;
+            }
+
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.style.opacity = '0.7';
+            }
+
+            try {
+                const url = addressId ? `/api/profiles/address/${addressId}` : '/api/profiles/address';
+                const method = addressId ? 'PUT' : 'POST';
+
+                const request = await fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        street,
+                        ward,
+                        district,
+                        city
+                    })
+                });
+                const data = await request.json();
+                if ( !request.ok || data.success === false) {
+                    throw new Error(data.message || 'Failed to add address');
+                }
+                if (addressId) {
+                    alert('Cập nhật địa chỉ thành công!');
+                } else {
+                    alert('Thêm địa chỉ thành công!');
+                }
+                resetAddressForm();
+                await loadAddress();
+            } catch (error) {
+                console.error('Error adding address:', error);
+                alert(error.message || 'Có lỗi xảy ra khi thêm địa chỉ. Vui lòng thử lại.');
+            } finally {
+                if (submitBtn) {
+                    submitBtn.disabled = false; // Mở khóa nút bấm
+                    submitBtn.style.opacity = '1'; // Làm nút sáng rõ trở lại
+                }
+            }
+        }
+    })
+
+    function resetAddressForm() {
+        document.getElementById('addressId').value = '';
+        document.getElementById('addressStreet').value = '';
+        document.getElementById('addressWard').value = '';
+        document.getElementById('addressDistrict').value = '';
+        document.getElementById('addressCity').value = '';
+        document.getElementById('addressFormTitle').textContent = 'Thêm địa chỉ mới';
+        document.getElementById('addressListView').classList.add('active');
+        document.getElementById('addressFormView').classList.remove('active');
+    }
+
+    function openAddressForm() {
+        document.getElementById('addressId').value = '';
+        document.getElementById('addressStreet').value = '';
+        document.getElementById('addressWard').value = '';
+        document.getElementById('addressDistrict').value = '';
+        document.getElementById('addressCity').value = '';
+        document.getElementById('addressFormTitle').textContent = 'Thêm địa chỉ mới';
+        document.getElementById('addressListView').classList.remove('active');
+        document.getElementById('addressFormView').classList.add('active');
+    }
+
+    function renderAddAddressCard() {
+        return `
+            <button type="button" class="address-add-card" onclick="openAddressForm()">
+                <i class="fas fa-plus-circle"></i>
+                <span>Thêm địa chỉ mới</span>
+            </button>
+        `;
+    }
+
+    function editAddress(address) {
+        document.getElementById('addressId').value = address._id || '';
+        document.getElementById('addressStreet').value = address.street || '';
+        document.getElementById('addressWard').value = address.ward || '';
+        document.getElementById('addressDistrict').value = address.district || '';
+        document.getElementById('addressCity').value = address.city || '';
+        document.getElementById('addressFormTitle').textContent = 'Cập nhật địa chỉ';
+        document.getElementById('addressListView').classList.remove('active');
+        document.getElementById('addressFormView').classList.add('active');
+        showSection('address');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    async function deleteAddress(addressId) {
+        if (!confirm('Ban chac chan muon xoa dia chi nay?')) return;
+        const token = getAuthToken();
+        if (!token) {
+            alert('Bạn chưa đăng nhập. Vui lòng đăng nhập lại.');
+            return;
+        }
+
+        try {
+            const request = await fetch(`/api/profiles/address/${addressId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            const data = await request.json();
+            if (!request.ok || data.success === false) {
+                throw new Error(data.message || 'Không thể xóa địa chỉ');
+            }
+
+            await loadAddress();
+        } catch (error) {
+            console.error('Error deleting address:', error);
+            alert(error.message || 'Có lỗi xảy ra khi xóa địa chỉ.');
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+            const hash = window.location.hash;
+            if (hash) {
+                showSection(hash.substring(1));
+            }
+
+            const phoneInput = document.getElementById('profilePhone');
+            if (phoneInput) {
+                phoneInput.addEventListener('input', function() {
+                    validatePhoneField(phoneInput.value, false);
+                });
+                phoneInput.addEventListener('blur', function() {
+                    validatePhoneField(phoneInput.value, true);
+                });
+            }
+            loadProfile();
+                loadCart();
+            loadOrders();
+            loadAddress();
+    });
+</script>
+</html>

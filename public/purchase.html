@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ hàng của bạn</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="static/purchase.css">
+</head>
+<body>
+    <div class="container">
+        <div class="max-w-6xl">
+            <!-- Progress Bar -->
+            <div class="progress-bar">
+                <a href="index.html" class="back-to-home-btn">
+                    <i class="fas fa-arrow-left"></i>
+                    Quay về trang chủ
+                </a>
+                <div class="progress-steps">
+                    <div class="step">
+                        <div class="step-number active" id="step1">1</div>
+                        <span class="step-label active" id="label1">Giỏ hàng</span>
+                    </div>
+                    <div class="step-line" id="line1"></div>
+                    <div class="step">
+                        <div class="step-number inactive" id="step2">2</div>
+                        <span class="step-label inactive" id="label2">Thanh toán</span>
+                    </div>
+                    <div class="step-line" id="line2"></div>
+                    <div class="step">
+                        <div class="step-number inactive" id="step3">3</div>
+                        <span class="step-label inactive" id="label3">Hoàn tất</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Cart Page -->
+            <div id="cartPage">
+                <div class="cart-grid">
+                    <!-- Cart Items -->
+                    <div>
+                        <div class="cart-section">
+                            <h2 class="section-title" id="cartTitle">
+                                <i class="fas fa-shopping-cart"></i>
+                            </h2>
+                            <!-- Hiển thị các sản phẩm trong giỏ hàng -->
+                            <div class="cart-item">
+                                <div class="item-content">
+                                    <div class="item-image">
+                                        <img src="static\image\adidas3_yU6oRwT.jpeg" alt="Giày Adidas Ultraboost">
+                                    </div>
+                                    <div class="item-details">
+                                        <div class="item-header">
+                                            <div>
+                                                <h3 class="item-name">Giày Adidas Ultraboost</h3>
+                                                <p class="item-variant">Adidas - Đức</p>
+                                                <p class="item-sku">Mã: 001 | Size: <span style="font-weight: 600; color: #ee4d2d;">42</span></p>
+                                            </div>
+                                            <button class="delete-btn" data-item="1" data-action="delete">
+                                                <i class="fas fa-trash" style="font-size: 1rem;"></i>
+                                            </button>
+                                        </div>
+
+                                        <div class="item-footer">
+                                            <div class="item-price">
+                                                <span class="original-price">2.500.000đ</span>
+                                                <span class="current-price">2.000.000đ</span>
+                                            </div>
+
+                                            <div class="quantity-control">
+                                                <span class="qty-label">Số lượng:</span>
+                                                <div class="qty-buttons">
+                                                    <button class="qty-btn" data-item="1" data-action="remove">−</button>
+                                                    <span class="qty-number">1</span>
+                                                    <button class="qty-btn" data-item="1" data-action="add">+</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cart-item">
+                                <div class="item-content">
+                                    <div class="item-image">
+                                        <img src="static\image\adidas3_yU6oRwT.jpeg" alt="Giày Nike Air Max">
+                                    </div>
+                                    <div class="item-details">
+                                        <div class="item-header">
+                                            <div>
+                                                <h3 class="item-name">Giày Nike Air Max</h3>
+                                                <p class="item-variant">Nike - Mỹ</p>
+                                                <p class="item-sku">Mã: 002 | Size: <span style="font-weight: 600; color: #ee4d2d;">40</span></p>
+                                            </div>
+                                            <button class="delete-btn" data-item="2" data-action="delete">
+                                                <i class="fas fa-trash" style="font-size: 1rem;"></i>
+                                            </button>
+                                        </div>
+
+                                        <div class="item-footer">
+                                            <div class="item-price">
+                                                <span class="current-price">1.800.000đ</span>
+                                            </div>
+
+                                            <div class="quantity-control">
+                                                <span class="qty-label">Số lượng:</span>
+                                                <div class="qty-buttons">
+                                                    <button class="qty-btn" data-item="2" data-action="remove">−</button>
+                                                    <span class="qty-number">1</span>
+                                                    <button class="qty-btn" data-item="2" data-action="add">+</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Order Summary -->
+                    <div>
+                        <div class="order-summary">
+                            <h3 class="summary-title">Tóm tắt đơn hàng</h3>
+                            <div class="summary-row">
+                                <span>Tạm tính</span>
+                                <span id="subtotal"></span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Phí vận chuyển</span>
+                                <span>30.000đ</span>
+                            </div>
+                            <div class="summary-row total">
+                                <span class="label">Tổng cộng</span>
+                                <span class="amount" id="grandTotal"></span>
+                            </div>
+
+                            <button class="checkout-btn" onclick="goToCheckout()">
+                                Tiến hành thanh toán
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+
+                            <div class="trust-badges">
+                                <div class="trust-item">
+                                    <i class="fas fa-shield-alt"></i>
+                                    <span>Miễn phí đổi trả trong 7 ngày</span>
+                                </div>
+                                <div class="trust-item">
+                                    <i class="fas fa-truck"></i>
+                                    <span>Giao hàng toàn quốc</span>
+                                </div>
+                                <div class="trust-item">
+                                    <i class="fas fa-credit-card"></i>
+                                    <span>Thanh toán an toàn & bảo mật</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Checkout Page -->
+            <div id="checkoutPage" style="display: none;">
+                <div class="checkout-grid">
+                    <!-- Checkout Form -->
+                    <div>
+                        <!-- Shipping Info -->
+                        <div class="cart-section" style="margin-bottom: 1.5rem;">
+                            <h3 class="section-title">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Thông tin giao hàng
+                            </h3>
+
+                            <form id="checkoutForm" method="POST" action="#" onsubmit="handleCheckout(event)">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label class="form-label">Họ và tên <span style="color: #ef4444;">*</span></label>
+                                        <input type="text" id="checkoutFullName" name="full_name" class="form-input" placeholder="Nhập tên của bạn" value="Nguyễn Văn A" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Số điện thoại <span style="color: #ef4444;">*</span></label>
+                                        <input type="tel" id="checkoutPhone" name="phone" class="form-input" placeholder="Số điện thoại" value="0123456789" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Email <span style="color: #ef4444;">*</span></label>
+                                    <input type="email" id="checkoutEmail" name="email" class="form-input" placeholder="Email của bạn" value="nguyenvana@email.com" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Nguồn địa chỉ giao hàng</label>
+                                    <div class="address-source-switch">
+                                        <label class="address-source-option">
+                                            <input type="radio" name="address_source" value="saved" checked>
+                                            <span>Dùng địa chỉ đã lưu</span>
+                                        </label>
+                                        <label class="address-source-option">
+                                            <input type="radio" name="address_source" value="new">
+                                            <span>Nhập địa chỉ mới</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" id="savedAddressGroup">
+                                    <label class="form-label">Chọn địa chỉ đã lưu</label>
+                                    <select id="savedAddressSelect" class="form-select">
+                                        <option value="">-- Đang tải địa chỉ --</option>
+                                    </select>
+                                    <small id="savedAddressHint" class="address-hint-text"></small>
+                                </div>
+
+                                <div id="manualAddressFields">
+                                    <div class="form-group">
+                                        <label class="form-label">Địa chỉ <span style="color: #ef4444;">*</span></label>
+                                        <input type="text" id="checkoutStreet" name="street" class="form-input" placeholder="Số nhà, tên đường" value="123 Nguyễn Trãi" required>
+                                    </div>
+
+                                    <div class="form-row-3">
+                                        <div class="form-group">
+                                            <label class="form-label">Tỉnh/Thành <span style="color: #ef4444;">*</span></label>
+                                            <input type="text" id="checkoutCity" name="city" class="form-input" placeholder="Hà Nội" value="Hà Nội" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Quận/Huyện <span style="color: #ef4444;">*</span></label>
+                                            <input type="text" id="checkoutDistrict" name="district" class="form-input" placeholder="Hà Đông" value="Thanh Xuân" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Phường/Xã <span style="color: #ef4444;">*</span></label>
+                                            <input type="text" id="checkoutWard" name="ward" class="form-input" placeholder="Nguyễn Trãi" value="Khương Trung" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <input type="hidden" id="checkoutAddressId" name="address_id" value="">
+
+                                <div class="form-group">
+                                    <label class="form-label">Ghi chú (tùy chọn)</label>
+                                    <textarea name="note" class="form-textarea" rows="3" placeholder="Ghi chú về đơn hàng..."></textarea>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Payment Method -->
+                        <div class="cart-section">
+                            <h3 class="section-title">
+                                <i class="fas fa-credit-card"></i>
+                                Phương thức thanh toán
+                            </h3>
+
+                            <label class="payment-option selected">
+                                <input type="radio" name="payment_method" value="COD" form="checkoutForm" checked>
+                                <div class="payment-info">
+                                    <div class="payment-title">Thanh toán khi nhận hàng (COD)</div>
+                                    <div class="payment-desc">Thanh toán bằng tiền mặt khi nhận hàng</div>
+                                </div>
+                            </label>
+
+                            <label class="payment-option">
+                                <input type="radio" name="payment_method" value="BANK" form="checkoutForm">
+                                <div class="payment-info">
+                                    <div class="payment-title">Chuyển khoản ngân hàng</div>
+                                    <div class="payment-desc">Chuyển khoản qua VietQR hoặc số tài khoản</div>
+                                </div>
+                            </label>
+
+                            <label class="payment-option">
+                                <input type="radio" name="payment_method" value="EWALLET" form="checkoutForm">
+                                <div class="payment-info">
+                                    <div class="payment-title">Ví điện tử (Momo, ZaloPay)</div>
+                                    <div class="payment-desc">Thanh toán qua ví điện tử</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Order Summary (Checkout) -->
+                    <div>
+                        <div class="order-summary">
+                            <h3 class="summary-title">Đơn hàng của bạn</h3>
+
+                            <!-- Items -->
+                            <div id="checkoutItemsContainer" style="margin-bottom: 1rem;">
+                            </div>
+
+                            <div style="border-top: 1px solid #e5e7eb; padding-top: 1rem; margin-bottom: 1rem;">
+                                <div class="summary-row">
+                                    <span>Tạm tính</span>
+                                    <span id="checkoutSubtotal"></span>
+                                </div>
+                                <div class="summary-row">
+                                    <span>Phí vận chuyển</span>
+                                    <span>30.000đ</span>
+                                </div>
+                                <div class="summary-row total">
+                                    <span class="label">Tổng cộng</span>
+                                    <span class="amount" id="checkoutGrandTotal"></span>
+                                </div>
+                            </div>
+
+                            <button type="submit" form="checkoutForm" class="checkout-btn">
+                                <i class="fas fa-check-circle"></i>
+                                Hoàn tất đơn hàng
+                            </button>
+
+                            <button type="button" class="back-btn" onclick="backToCart()">
+                                ← Quay lại giỏ hàng
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="completePage" style="display: none;">
+                <div class="complete-card">
+                    <div class="complete-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3>Đặt hàng thành công</h3>
+                    <p>Đơn hàng COD của bạn đã được tạo thành công.</p>
+
+                    <div class="complete-meta">
+                        <div class="complete-meta-row">
+                            <span>Mã đơn:</span>
+                            <strong id="completeOrderId">--</strong>
+                        </div>
+                        <div class="complete-meta-row">
+                            <span>Tổng tiền:</span>
+                            <strong id="completeOrderTotal">--</strong>
+                        </div>
+                    </div>
+
+                    <div class="complete-actions" id="orderCreatedAction">
+                        <a href="/profile#orders" class="checkout-btn complete-link-btn">Xem lịch sử đơn hàng</a>
+                        <button type="button" class="back-btn" onclick="backToCart()">Tiếp tục mua sắm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const DEMO_AUTH_KEY = 'demo_auth_user';
+        const DEFAULT_PRODUCT_IMAGE = 'static/image/adidas3_yU6oRwT.jpeg';
+        const shippingFee = 30000;
+        let currentCartItems = [];
+        let savedAddresses = [];
+        let currentProfile = null;
+
+        const formatVnd = (value) => Number(value || 0).toLocaleString('vi-VN') + 'đ';
+
+        function getAuthToken() {
+            const raw = localStorage.getItem(DEMO_AUTH_KEY);
+            if (!raw) return '';
+            try {
+                const parsed = JSON.parse(raw);
+                if (typeof parsed === 'string') return parsed;
+                return parsed.token || parsed.accessToken || '';
+            } catch (error) {
+                return raw;
+            }
+        }
+
+        function getSubtotal() {
+            return currentCartItems.reduce((sum, item) => {
+                return sum + (Number(item?.product?.price || 0) * Number(item?.quantity || 0));
+            }, 0);
+        }
+
+        function escapeHtml(value) {
+            return String(value || '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function resolveProductImage(product) {
+            const rawImage = String(product?.image || product?.image_url || '').trim().replace(/\\/g, '/');
+            return rawImage || DEFAULT_PRODUCT_IMAGE;
+        }
+
+        function getAddressLabel(address) {
+            const parts = [address?.street, address?.ward, address?.district, address?.city]
+                .map((part) => String(part || '').trim())
+                .filter(Boolean);
+            return parts.join(', ');
+        }
+
+        function getAddressInputs() {
+            return {
+                streetInput: document.getElementById('checkoutStreet'),
+                cityInput: document.getElementById('checkoutCity'),
+                districtInput: document.getElementById('checkoutDistrict'),
+                wardInput: document.getElementById('checkoutWard')
+            };
+        }
+
+        function setAddressInputsReadOnly(readOnly) {
+            const { streetInput, cityInput, districtInput, wardInput } = getAddressInputs();
+            [streetInput, cityInput, districtInput, wardInput].forEach((input) => {
+                if (!input) return;
+                input.readOnly = Boolean(readOnly);
+            });
+        }
+
+        function clearAddressInputs() {
+            const { streetInput, cityInput, districtInput, wardInput } = getAddressInputs();
+            if (streetInput) streetInput.value = '';
+            if (cityInput) cityInput.value = '';
+            if (districtInput) districtInput.value = '';
+            if (wardInput) wardInput.value = '';
+        }
+
+        function updateSummary() {
+            const subtotal = getSubtotal();
+            const grandTotal = subtotal + (currentCartItems.length ? shippingFee : 0);
+
+            const subtotalEl = document.getElementById('subtotal');
+            const checkoutSubtotalEl = document.getElementById('checkoutSubtotal');
+            const grandTotalEl = document.getElementById('grandTotal');
+            const checkoutGrandTotalEl = document.getElementById('checkoutGrandTotal');
+
+            if (subtotalEl) subtotalEl.textContent = formatVnd(subtotal);
+            if (checkoutSubtotalEl) checkoutSubtotalEl.textContent = formatVnd(subtotal);
+            if (grandTotalEl) grandTotalEl.textContent = formatVnd(grandTotal);
+            if (checkoutGrandTotalEl) checkoutGrandTotalEl.textContent = formatVnd(grandTotal);
+        }
+
+        async function fetchCartItems() {
+            const token = getAuthToken();
+            if (!token) {
+                alert('Vui lòng đăng nhập để xem giỏ hàng.');
+                return [];
+            }
+
+            try {
+                const response = await fetch('/api/cart', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const payload = await response.json();
+                if (!response.ok || payload.success === false) {
+                    throw new Error(payload.message || 'Không thể tải giỏ hàng');
+                }
+                return Array.isArray(payload.data) ? payload.data : [];
+            } catch (error) {
+                console.error('Error fetching cart items:', error);
+                alert(error.message || 'Có lỗi xảy ra khi tải giỏ hàng.');
+                return [];
+            }
+        }
+
+        async function fetchProfileData() {
+            const token = getAuthToken();
+            if (!token) return null;
+
+            try {
+                const response = await fetch('/api/profiles', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const payload = await response.json();
+                if (!response.ok || payload.success === false) {
+                    throw new Error(payload.message || 'Không thể tải thông tin người dùng');
+                }
+                return payload.data || null;
+            } catch (error) {
+                console.error('Error fetching profile:', error);
+                return null;
+            }
+        }
+
+        async function fetchSavedAddresses() {
+            const token = getAuthToken();
+            if (!token) return [];
+
+            try {
+                const response = await fetch('/api/profiles/address', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const payload = await response.json();
+                if (!response.ok || payload.success === false) {
+                    throw new Error(payload.message || 'Không thể tải địa chỉ đã lưu');
+                }
+                return Array.isArray(payload.data) ? payload.data : [];
+            } catch (error) {
+                console.error('Error fetching addresses:', error);
+                return [];
+            }
+        }
+
+        function applyProfileToCheckoutForm() {
+            if (!currentProfile) return;
+
+            const fullNameInput = document.getElementById('checkoutFullName');
+            const phoneInput = document.getElementById('checkoutPhone');
+            const emailInput = document.getElementById('checkoutEmail');
+
+            if (fullNameInput && currentProfile.username) fullNameInput.value = currentProfile.username;
+            if (phoneInput && currentProfile.phone) phoneInput.value = currentProfile.phone;
+            if (emailInput && currentProfile.email) emailInput.value = currentProfile.email;
+        }
+
+        function populateSavedAddressOptions() {
+            const select = document.getElementById('savedAddressSelect');
+            const hint = document.getElementById('savedAddressHint');
+            const sourceSaved = document.querySelector('input[name="address_source"][value="saved"]');
+            if (!select) return;
+
+            if (!savedAddresses.length) {
+                select.innerHTML = '<option value="">-- Chưa có địa chỉ đã lưu --</option>';
+                select.disabled = true;
+                if (sourceSaved) sourceSaved.disabled = true;
+                if (hint) hint.textContent = 'Bạn chưa có địa chỉ lưu. Vui lòng chọn Nhập địa chỉ mới.';
+                const sourceNew = document.querySelector('input[name="address_source"][value="new"]');
+                if (sourceNew) sourceNew.checked = true;
+                setAddressSourceMode('new');
+                return;
+            }
+
+            select.innerHTML = '<option value="">-- Chọn địa chỉ đã lưu --</option>' + savedAddresses.map((address) => {
+                const label = getAddressLabel(address) || 'Địa chỉ không tên';
+                return `<option value="${escapeHtml(address._id)}">${escapeHtml(label)}</option>`;
+            }).join('');
+            select.disabled = false;
+            if (sourceSaved) sourceSaved.disabled = false;
+            if (hint) hint.textContent = 'Chọn địa chỉ để tự động điền vào form giao hàng.';
+
+            const firstAddress = savedAddresses[0];
+            if (firstAddress) {
+                select.value = firstAddress._id;
+                applyAddressToCheckoutForm(firstAddress._id);
+            }
+        }
+
+        function applyAddressToCheckoutForm(addressId) {
+            const address = savedAddresses.find((item) => String(item._id) === String(addressId));
+            if (!address) return;
+
+            const { streetInput, cityInput, districtInput, wardInput } = getAddressInputs();
+            const addressIdInput = document.getElementById('checkoutAddressId');
+
+            if (streetInput) streetInput.value = address.street || '';
+            if (cityInput) cityInput.value = address.city || '';
+            if (districtInput) districtInput.value = address.district || '';
+            if (wardInput) wardInput.value = address.ward || '';
+            if (addressIdInput) addressIdInput.value = address._id || '';
+        }
+
+        function setAddressSourceMode(mode) {
+            const savedGroup = document.getElementById('savedAddressGroup');
+            const manualFields = document.getElementById('manualAddressFields');
+            const addressIdInput = document.getElementById('checkoutAddressId');
+            const { streetInput, cityInput, districtInput, wardInput } = getAddressInputs();
+            const requiredInputs = [streetInput, cityInput, districtInput, wardInput];
+
+            if (savedGroup) {
+                savedGroup.style.display = mode === 'saved' ? 'block' : 'none';
+            }
+
+            if (mode === 'saved') {
+                if (manualFields) manualFields.style.display = 'none';
+                setAddressInputsReadOnly(true);
+                requiredInputs.forEach((input) => {
+                    if (!input) return;
+                    input.required = false;
+                });
+                const select = document.getElementById('savedAddressSelect');
+                if (select && select.value) {
+                    applyAddressToCheckoutForm(select.value);
+                }
+                return;
+            }
+
+            if (manualFields) manualFields.style.display = 'block';
+            setAddressInputsReadOnly(false);
+            clearAddressInputs();
+            requiredInputs.forEach((input) => {
+                if (!input) return;
+                input.required = true;
+            });
+            if (addressIdInput) addressIdInput.value = '';
+        }
+
+        function setupAddressSelectionHandlers() {
+            const sourceInputs = document.querySelectorAll('input[name="address_source"]');
+            const savedAddressSelect = document.getElementById('savedAddressSelect');
+            const { streetInput, cityInput, districtInput, wardInput } = getAddressInputs();
+
+            sourceInputs.forEach((input) => {
+                input.addEventListener('change', () => {
+                    setAddressSourceMode(input.value);
+                });
+            });
+
+            if (savedAddressSelect) {
+                savedAddressSelect.addEventListener('change', (event) => {
+                    applyAddressToCheckoutForm(event.target.value);
+                });
+            }
+
+            [streetInput, cityInput, districtInput, wardInput].forEach((input) => {
+                if (!input) return;
+                input.addEventListener('input', () => {
+                    const sourceSaved = document.querySelector('input[name="address_source"][value="saved"]');
+                    const sourceNew = document.querySelector('input[name="address_source"][value="new"]');
+                    if (sourceSaved && sourceSaved.checked && sourceNew && !sourceNew.checked) {
+                        sourceNew.checked = true;
+                        setAddressSourceMode('new');
+                    }
+                });
+            });
+        }
+
+        async function hydrateCheckoutProfileAndAddresses() {
+            const [profile, addresses] = await Promise.all([
+                fetchProfileData(),
+                fetchSavedAddresses()
+            ]);
+
+            currentProfile = profile;
+            savedAddresses = addresses;
+
+            applyProfileToCheckoutForm();
+            populateSavedAddressOptions();
+
+            const selectedSource = document.querySelector('input[name="address_source"]:checked');
+            setAddressSourceMode(selectedSource ? selectedSource.value : 'new');
+        }
+
+        async function updateCartItemQuantity(cartItemId, quantity) {
+            const token = getAuthToken();
+            if (!token) throw new Error('Bạn chưa đăng nhập');
+
+            const response = await fetch(`/api/cart/${encodeURIComponent(cartItemId)}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ quantity })
+            });
+            const payload = await response.json();
+            if (!response.ok || payload.success === false) {
+                throw new Error(payload.message || 'Không thể cập nhật số lượng');
+            }
+        }
+
+        async function removeCartItem(productId) {
+            const token = getAuthToken();
+            if (!token) throw new Error('Bạn chưa đăng nhập');
+
+            const response = await fetch(`/api/cart/${encodeURIComponent(productId)}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            const payload = await response.json();
+            if (!response.ok || payload.success === false) {
+                throw new Error(payload.message || 'Không thể xóa sản phẩm');
+            }
+        }
+
+        function renderCartItems() {
+            const cartContainer = document.querySelector('#cartPage .cart-section');
+            if (!cartContainer) return;
+
+            if (currentCartItems.length === 0) {
+                cartContainer.innerHTML = `
+                    <h2 class="section-title" id="cartTitle">
+                        <i class="fas fa-shopping-cart"></i>
+                        Giỏ hàng của bạn
+                    </h2>
+                    <p style="color:#6b7280; margin-top: 1rem;">Giỏ hàng trống</p>
+                `;
+                return;
+            }
+
+            const itemsHtml = currentCartItems.map((item) => {
+                const product = item.product || {};
+                const imageSrc = resolveProductImage(product);
+                const productId = product._id || '';
+
+                return `
+                    <div class="cart-item">
+                        <div class="item-content">
+                            <div class="item-image">
+                                <img src="${imageSrc}" alt="${product.name || 'Sản phẩm'}" onerror="this.src='${DEFAULT_PRODUCT_IMAGE}'">
+                            </div>
+                            <div class="item-details">
+                                <div class="item-header">
+                                    <div>
+                                        <h3 class="item-name">${product.name || 'Sản phẩm'}</h3>
+                                        <p class="item-variant">Sản phẩm</p>
+                                        <p class="item-sku">Mã: ${productId || 'N/A'}</p>
+                                    </div>
+                                    <button class="delete-btn" data-product-id="${productId}" aria-label="Xóa sản phẩm">
+                                        <i class="fas fa-trash" style="font-size: 1rem;"></i>
+                                    </button>
+                                </div>
+
+                                <div class="item-footer">
+                                    <div class="item-price">
+                                        <span class="current-price">${formatVnd(product.price)}</span>
+                                    </div>
+
+                                    <div class="quantity-control">
+                                        <span class="qty-label">Số lượng:</span>
+                                        <div class="qty-buttons">
+                                            <button class="qty-btn" data-cart-id="${item._id}" data-action="remove">−</button>
+                                            <span class="qty-number">${item.quantity}</span>
+                                            <button class="qty-btn" data-cart-id="${item._id}" data-action="add">+</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            cartContainer.innerHTML = `
+                <h2 class="section-title" id="cartTitle">
+                    <i class="fas fa-shopping-cart"></i>
+                    Giỏ hàng của bạn (${currentCartItems.length} sản phẩm)
+                </h2>
+                ${itemsHtml}
+            `;
+        }
+
+        function renderCheckoutItems() {
+            const summaryContainer = document.querySelector('#checkoutItemsContainer');
+            if (!summaryContainer) return;
+
+            if (currentCartItems.length === 0) {
+                summaryContainer.innerHTML = '<p style="color:#6b7280;">Giỏ hàng trống</p>';
+                return;
+            }
+
+            summaryContainer.innerHTML = currentCartItems.map((item) => {
+                const product = item.product || {};
+                const imageSrc = resolveProductImage(product);
+                return `
+                    <div class="order-item-small">
+                        <div class="item-thumb">
+                            <img src="${imageSrc}" alt="${product.name || 'Sản phẩm'}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;" onerror="this.src='${DEFAULT_PRODUCT_IMAGE}'">
+                        </div>
+                        <div class="item-info-small">
+                            <div class="item-name-small">${product.name || 'Sản phẩm'}</div>
+                            <div class="item-variant-small">Sản phẩm</div>
+                            <div class="item-price-small">${formatVnd(product.price)} × ${item.quantity}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        async function loadCart() {
+            currentCartItems = await fetchCartItems();
+            renderCartItems();
+            renderCheckoutItems();
+            updateSummary();
+        }
+
+        async function createAddressForOrder(addressPayload) {
+            const token = getAuthToken();
+            if (!token) throw new Error('Bạn chưa đăng nhập');
+
+            const response = await fetch('/api/profiles/address', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(addressPayload)
+            });
+
+            const payload = await response.json();
+            if (!response.ok || payload.success === false) {
+                throw new Error(payload.message || 'Không thể tạo địa chỉ mới');
+            }
+
+            const addressId = payload.data?._id;
+            if (!addressId) {
+                throw new Error('Không lấy được địa chỉ mới để tạo đơn hàng');
+            }
+
+            return addressId;
+        }
+
+        async function createOrder(orderPayload) {
+            const token = getAuthToken();
+            if (!token) throw new Error('Bạn chưa đăng nhập');
+
+            const response = await fetch('/api/orders', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(orderPayload)
+            });
+
+            const payload = await response.json();
+            if (!response.ok || payload.success === false) {
+                throw new Error(payload.message || 'Không thể tạo đơn hàng');
+            }
+
+            return payload.data;
+        }
+
+        function showOrderComplete(orderData) {
+            document.getElementById('cartPage').style.display = 'none';
+            document.getElementById('checkoutPage').style.display = 'none';
+            document.getElementById('completePage').style.display = 'block';
+
+            document.getElementById('completeOrderId').textContent = orderData?._id || '--';
+            document.getElementById('completeOrderTotal').textContent = formatVnd(orderData?.total_price || 0);
+
+            document.getElementById('step1').classList.remove('active');
+            document.getElementById('step1').classList.add('completed');
+            document.getElementById('step1').innerHTML = '<i class="fas fa-check" style="font-size: 0.875rem;"></i>';
+            document.getElementById('label1').classList.remove('active');
+            document.getElementById('label1').classList.add('inactive');
+
+            document.getElementById('line1').classList.add('active');
+
+            document.getElementById('step2').classList.remove('active');
+            document.getElementById('step2').classList.add('completed');
+            document.getElementById('step2').innerHTML = '<i class="fas fa-check" style="font-size: 0.875rem;"></i>';
+            document.getElementById('label2').classList.remove('active');
+            document.getElementById('label2').classList.add('inactive');
+
+            document.getElementById('line2').classList.add('active');
+
+            document.getElementById('step3').classList.remove('inactive');
+            document.getElementById('step3').classList.add('active');
+            document.getElementById('label3').classList.remove('inactive');
+            document.getElementById('label3').classList.add('active');
+
+            window.scrollTo(0, 0);
+        }
+
+        async function handleCheckout(event) {
+            event.preventDefault();
+            if (currentCartItems.length === 0) {
+                alert('Giỏ hàng đang trống, không thể thanh toán.');
+                return;
+            }
+
+            const formData = new FormData(event.target);
+            const paymentMethod = formData.get('payment_method');
+            const addressSource = formData.get('address_source') || 'new';
+            const selectedAddressId = formData.get('address_id') || '';
+            const phone = String(formData.get('phone') || '').trim();
+
+            if (addressSource === 'saved' && !selectedAddressId) {
+                alert('Vui lòng chọn một địa chỉ đã lưu.');
+                return;
+            }
+
+            const shippingAddress = {
+                street: formData.get('street'),
+                city: formData.get('city'),
+                district: formData.get('district'),
+                ward: formData.get('ward')
+            };
+
+            if (!phone) {
+                alert('Vui lòng nhập số điện thoại.');
+                return;
+            }
+
+            if (paymentMethod !== 'COD') {
+                alert('Hiện tại chỉ hỗ trợ tạo đơn trực tiếp với COD.');
+                return;
+            }
+
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.style.opacity = '0.7';
+            }
+
+            try {
+                let addressId = selectedAddressId;
+                if (addressSource === 'new') {
+                    const hasAddressData = shippingAddress.street && shippingAddress.city && shippingAddress.district && shippingAddress.ward;
+                    if (!hasAddressData) {
+                        throw new Error('Vui lòng nhập đầy đủ địa chỉ mới.');
+                    }
+                    addressId = await createAddressForOrder(shippingAddress);
+                }
+
+                const cartItemIds = currentCartItems.map((item) => item._id).filter(Boolean);
+                const orderPayload = {
+                    address: addressId,
+                    phone,
+                    cart_item_ids: cartItemIds
+                };
+
+                const createdOrder = await createOrder(orderPayload);
+
+                alert('Đặt hàng COD thành công!');
+                await hydrateCheckoutProfileAndAddresses();
+                await loadCart();
+                showOrderComplete(createdOrder);
+            } catch (error) {
+                alert(error.message || 'Thanh toán thất bại, vui lòng thử lại.');
+            } finally {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.style.opacity = '1';
+                }
+            }
+        }
+
+        function goToCheckout() {
+            if (currentCartItems.length === 0) {
+                alert('Giỏ hàng đang trống, không thể thanh toán.');
+                return;
+            }
+
+            document.getElementById('cartPage').style.display = 'none';
+            document.getElementById('checkoutPage').style.display = 'block';
+            document.getElementById('completePage').style.display = 'none';
+
+            document.getElementById('step1').classList.remove('active');
+            document.getElementById('step1').classList.add('completed');
+            document.getElementById('step1').innerHTML = '<i class="fas fa-check" style="font-size: 0.875rem;"></i>';
+            document.getElementById('label1').classList.remove('active');
+            document.getElementById('label1').classList.add('inactive');
+
+            document.getElementById('line1').classList.add('active');
+
+            document.getElementById('step2').classList.remove('inactive');
+            document.getElementById('step2').classList.remove('completed');
+            document.getElementById('step2').classList.add('active');
+            document.getElementById('step2').textContent = '2';
+            document.getElementById('label2').classList.remove('inactive');
+            document.getElementById('label2').classList.add('active');
+
+            document.getElementById('line2').classList.remove('active');
+            document.getElementById('step3').classList.remove('active');
+            document.getElementById('step3').classList.add('inactive');
+            document.getElementById('step3').textContent = '3';
+            document.getElementById('label3').classList.remove('active');
+            document.getElementById('label3').classList.add('inactive');
+
+            window.scrollTo(0, 0);
+        }
+
+        function backToCart() {
+            document.getElementById('cartPage').style.display = 'block';
+            document.getElementById('checkoutPage').style.display = 'none';
+            document.getElementById('completePage').style.display = 'none';
+
+            document.getElementById('step1').classList.remove('completed');
+            document.getElementById('step1').classList.add('active');
+            document.getElementById('step1').textContent = '1';
+            document.getElementById('label1').classList.remove('inactive');
+            document.getElementById('label1').classList.add('active');
+
+            document.getElementById('line1').classList.remove('active');
+
+            document.getElementById('step2').classList.remove('active');
+            document.getElementById('step2').classList.remove('completed');
+            document.getElementById('step2').classList.add('inactive');
+            document.getElementById('step2').textContent = '2';
+            document.getElementById('label2').classList.remove('active');
+            document.getElementById('label2').classList.add('inactive');
+
+            document.getElementById('line2').classList.remove('active');
+            document.getElementById('step3').classList.remove('active');
+            document.getElementById('step3').classList.add('inactive');
+            document.getElementById('step3').textContent = '3';
+            document.getElementById('label3').classList.remove('active');
+            document.getElementById('label3').classList.add('inactive');
+
+            window.scrollTo(0, 0);
+        }
+
+        document.addEventListener('DOMContentLoaded', async function() {
+            const paymentOptions = document.querySelectorAll('.payment-option');
+            paymentOptions.forEach((option) => {
+                option.addEventListener('click', function() {
+                    paymentOptions.forEach((opt) => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    this.querySelector('input[type="radio"]').checked = true;
+                });
+            });
+
+            setupAddressSelectionHandlers();
+            await hydrateCheckoutProfileAndAddresses();
+            await loadCart();
+        });
+
+        document.addEventListener('click', async function(e) {
+            if (e.target.classList.contains('qty-btn') || e.target.closest('.qty-btn')) {
+                const btn = e.target.closest('.qty-btn') || e.target;
+                const cartId = btn.dataset.cartId;
+                const action = btn.dataset.action;
+                const item = currentCartItems.find((x) => x._id === cartId);
+                if (!item) return;
+
+                const nextQty = action === 'add' ? Number(item.quantity) + 1 : Number(item.quantity) - 1;
+                if (nextQty < 1) return;
+
+                try {
+                    await updateCartItemQuantity(cartId, nextQty);
+                    await loadCart();
+                } catch (error) {
+                    alert(error.message || 'Không thể cập nhật số lượng');
+                }
+            }
+
+            if (e.target.classList.contains('delete-btn') || e.target.closest('.delete-btn')) {
+                const btn = e.target.closest('.delete-btn') || e.target;
+                const productId = btn.dataset.productId;
+                if (!productId) return;
+                if (!confirm('Bạn có chắc muốn xóa sản phẩm này khỏi giỏ hàng?')) return;
+
+                try {
+                    await removeCartItem(productId);
+                    await loadCart();
+                } catch (error) {
+                    alert(error.message || 'Không thể xóa sản phẩm');
+                }
+            }
+        });
+    </script>
+</body>
+</html>

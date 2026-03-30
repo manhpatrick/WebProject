@@ -1,0 +1,1772 @@
+<!DOCTYPE html>
+<html lang="en,vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sport clothes</title>
+  <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/512/2922/2922510.png">
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+  />
+  <link rel="stylesheet" href="static/style.css" />
+  <link rel="stylesheet" href="static/base.css" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet"
+  />
+  <script
+    src="https://kit.fontawesome.com/be5a5c6271.js"
+    crossorigin="anonymous"
+  ></script>
+</head>
+<body>
+    <div class="header">
+      <div class="grid">
+        <!-- Header navbar -->
+        <nav class="header__navbar">
+          <ul class="header__nav-list" id="authNav">
+            <li class="header__nav-item header__nav-item--slash">
+              <a href="/" class="header__nav-item">Trang chủ </a>
+            </li>
+            <li class="header__nav-item header__nav-item--post">
+              <span class="header__navbar-title--unchanged"
+                >Kết nối tài khoản</span
+              >
+            </li>
+          </ul>
+          <ul class="header__nav-list">
+            <li class="header__nav-item">
+              <a href="#" class="header__nav-item-link">
+                <i class="header__navbar-icon fa-regular fa-circle-question">
+                </i>
+                Hỗ trợ
+              </a>
+            </li>
+            <li
+              class="header__nav-item"
+            >
+              <div class="header__nav-item-link header__nav-item-link--language">
+                <i class="header__navbar-icon fa-solid fa-globe">
+                </i>
+                Tiếng Việt
+              </div>
+            </li>
+            <div id="authContainer" style="display: contents;"></div>
+          </ul>
+        </nav>
+        <!-- Header search -->
+        <div class="header-searching">
+          <div class="header__logo">
+            <img src="https://via.placeholder.com/150x50?text=SportClothes" alt="" class="header__logo-img" />
+          </div>
+          <form action="#" method="get" class="header__search-bar" id="searchForm" onsubmit="handleSearch(event); return false;">
+            <div class="header__search-input-wrap">
+              <input
+                type="text"
+                name="searched"
+                id="searchInput"
+                class="header__search-input"
+                placeholder="Nhập để tìm kiếm sản phẩm"
+                value=""
+                autocomplete="off"
+                oninput="handleSearch(event)"
+              />
+              <!-- Dropdown lịch sử tìm kiếm -->
+              <div class="search-history-dropdown" id="searchHistoryDropdown" style="display: none;">
+                <ul class="search-history-list" id="searchHistoryList">
+                  <!-- Items sẽ được thêm bằng JavaScript -->
+                </ul>
+              </div>
+            </div>
+            <button type="submit" class="header__search-btn">
+              <i class="header__search-icon fa-solid fa-magnifying-glass"></i>
+            </button>
+          </form>
+          <div class="header__cart">
+            <div class="header__cart-wrap" id="cartWrapper">
+              <i class="header__cart-icon fa-solid fa-cart-shopping"></i>
+              <div id="cartDropdown" class="header__cart-list"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="grid">
+        <div class="grid-row app-content">
+          <div class="grid__column-2">
+            <nav class="category">
+              <h3 class="category__heading">
+                <i class="fa-solid fa-list category__heading-icon"></i>
+                Danh mục
+              </h3>
+              <ul class="category-list" id ="categoryContainer">
+              </ul>
+            </nav>
+          </div>
+          <div class="grid__column-10">
+            <div class="home-filter">
+              <span class="home-filter__label">Sắp xếp theo</span>
+              <a href="#" class="home-filter__btn btn btn--primary" data-sort-mode="newest" onclick="filterBySort('mode', 'newest'); event.preventDefault(); return false;">Mới nhất</a>
+              <a href="#" class="home-filter__btn btn" data-sort-mode="popular" onclick="filterBySort('mode', 'popular'); event.preventDefault(); return false;">Phổ biến</a>
+              <a href="#" class="home-filter__btn btn" data-sort-mode="sold" onclick="filterBySort('mode', 'sold'); event.preventDefault(); return false;">Bán chạy</a>
+              <div class="select-input">
+                <span class="select-input__label">Giá</span>
+                <i class="select-input__icon fas fa-angle-down"></i>
+                <ul class="select-input__list">
+                  <li class="select-input__item">
+                    <a href="#" class="select-input__link" data-sort-price="asc" onclick="filterBySort('price', 'asc'); event.preventDefault(); return false;">Giá: Thấp đến cao</a>
+                  </li>
+                  <li class="select-input__item">
+                    <a href="#" class="select-input__link" data-sort-price="desc" onclick="filterBySort('price', 'desc'); event.preventDefault(); return false;">Giá: Cao đến thấp</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="home-product">
+              <div class="grid-row" id="productContainer"></div>
+            </div>
+            <ul class="pagination home-product__pagination" id="productPagination"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="footer-content">
+        <div class="footer-section">
+            <h3>Về chúng tôi</h3>
+            <p class="footer-description">Cửa hàng thể thao uy tín, chất lượng hàng đầu Việt Nam</p>
+            <div class="social-links">
+                <a href="https://www.facebook.com/adidasVN/?brand_redir=182162001806727&locale=vi_VN#" aria-label="Facebook">
+                    <i class="fa-brands fa-facebook"></i>              
+                </a>
+                <a href="https://www.instagram.com/adidas/" aria-label="Instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h3>Liên kết</h3>
+            <ul>
+                <li><a href="/">Trang chủ</a></li>
+                <li><a href="#">Trợ giúp</a></li>
+                <li><a href="#">Điều khoản & Dịch vụ</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Liên hệ</h3>
+            <ul>
+                <li><i class="fa-solid fa-envelope"></i> SportClothes@example.com</li>
+                <li><i class="fa-solid fa-phone"></i> (84) 123-456-789</li>
+                <li><i class="fa-solid fa-location-dot"></i> Hà Nội, Việt Nam</li>
+            </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+          <p>&copy; 2025 SportClothes. Tất cả quyền được bảo lưu.</p>
+      </div>
+    </div>
+
+<!-- Signup Modal -->
+<div class="modal hide" id="signupModal">
+  <div class="modal__overlay" onclick="closeSignupModal()"></div>
+  <div class="modal__body">
+    <div class="auth-form">
+      <div class="auth-form__container">
+        <div class="auth-form__header">
+          <a href="#" onclick="openSigninModal(); return false;" class="auth-form__register">
+            <h3>Đăng nhập</h3>
+          </a>
+          <a href="#" onclick="openSignupModal(); return false;" class="auth-form__switch">
+            <span>Đăng ký</span>
+          </a>
+        </div>
+
+        <form id="signupForm" action="#">
+          <div class="auth-form__form">
+            <div class="auth-form__group">
+              <input
+                id="signupEmail"
+                type="text"
+                class="auth-form__input"
+                placeholder="Email"
+                required
+              />
+
+              <input
+                id="signupPassword"
+                type="password"
+                class="auth-form__input"
+                placeholder="Mật khẩu"
+                required
+              />
+
+              <input
+                id="signupConfirmPassword"
+                type="password"
+                class="auth-form__input"
+                placeholder="Nhập lại mật khẩu"
+                required
+              />
+            </div>
+
+            <div class="auth-messages" id="signupMessages" style="display: none;"></div>
+
+            <div class="auth-form__policy">
+              <p class="auth-form__policy-text">
+                Bằng việc đăng ký tài khoản, bạn đã đồng ý với
+                <a href="#" class="auth-form__policy-link"><span>Điều khoản dịch vụ</span></a>
+                &
+                <a href="#" class="auth-form__policy-link"><span>Chính sách bảo mật</span></a>
+                của chúng tôi
+              </p>
+            </div>
+
+            <div class="auth-form__control">
+              <button type="button" onclick="closeSignupModal()" class="btn btn--back">
+                Trở lại
+              </button>
+              <button type="submit" class="btn btn--primary">
+                Đăng ký
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Signin Modal -->
+<div class="modal hide" id="signinModal">
+  <div class="modal__overlay" onclick="closeSigninModal()"></div>
+  <div class="modal__body">
+    <div class="auth-form">
+      <div class="auth-form__container">
+        <div class="auth-form__header">
+          <a href="#" onclick="openSigninModal(); return false;" class="auth-form__register">
+            <h3>Đăng nhập</h3>
+          </a>
+          <a href="#" onclick="openSignupModal(); return false;" class="auth-form__switch">
+            <span>Đăng ký</span>
+          </a>
+        </div>
+
+        <form id="signinForm" action="#">
+          <div class="auth-form__form">
+            <div class="auth-form__group">
+              <input
+                id="signinEmail"
+                type="text"
+                class="auth-form__input"
+                placeholder="Email"
+                required
+              />
+
+              <input
+                id="signinPassword"
+                type="password"
+                class="auth-form__input"
+                placeholder="Mật khẩu"
+                required
+              />
+            </div>
+
+            <div class="auth-messages" id="signinMessages" style="display: none;"></div>
+
+            <div class="auth-form__control">
+              <button type="button" onclick="closeSigninModal()" class="btn btn--back">
+                Trở lại
+              </button>
+              <button type="submit" class="btn btn--primary">
+                Đăng nhập
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Product Modal -->
+<div class="modal hide" id="productModal">
+  <div class="modal__overlay" onclick="closeProductModal()"></div>
+  <div class="modal__body product-modal__body">
+    <div class="product-modal-card">
+      <div class="product-modal__header">
+        <h3>Thông tin sản phẩm</h3>
+        <button type="button" class="product-modal__close" onclick="closeProductModal()" aria-label="Close">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="product-modal__content">
+        <div class="product-modal__left">
+          <span class="product-modal__badge">HOT</span>
+          <img id="productModalImage" src="static/image/adidas3_yU6oRwT.jpeg" alt="Product image" class="product-modal__image" />
+        </div>
+        <div class="product-modal__right">
+          <h4 id="productModalName" class="product-modal__name">Sản phẩm</h4>
+          <div class="product-modal__rating-row">
+            <span id="productModalStars" class="product-modal__stars"></span>
+            <span class="product-modal__score"><span id="productModalRating">0.0</span>/5</span>
+            <span>|</span>
+            <span class="product-modal__reviews">(<span id="productModalReviews">0</span> đánh giá)</span>
+            <span>|</span>
+            <span class="product-modal__sold"><i class="fa-solid fa-fire"></i> <span id="productModalSold">0</span> đã bán</span>
+          </div>
+          <div class="product-modal__price-box">
+            <div class="product-modal__price-top">
+              <span id="productModalNewPrice" class="product-modal__price--new"></span>
+              <span id="productModalDiscount" class="product-modal__discount"></span>
+            </div>
+            <span id="productModalOldPrice" class="product-modal__price--old"></span>
+          </div>
+          <div class="product-modal__description">
+            <h5><i class="fa-solid fa-circle-info"></i> Mô tả sản phẩm</h5>
+            <p id="productModalDescription">Đang cập nhật mô tả sản phẩm...</p>
+          </div>
+          <div class="product-modal__features">
+            <div class="product-modal__feature"><i class="fa-solid fa-truck-fast"></i> Giao hàng nhanh</div>
+            <div class="product-modal__feature"><i class="fa-solid fa-shield-halved"></i> Chính hãng 100%</div>
+            <div class="product-modal__feature"><i class="fa-solid fa-rotate-left"></i> Đổi trả 7 ngày</div>
+          </div>
+          <div class="product-modal__qty">
+            <span><i class="fa-solid fa-box"></i> Số lượng:</span>
+            <button type="button" class="product-modal__qty-btn" onclick="changeProductQuantity(-1)">-</button>
+            <input id="productModalQuantity" class="product-modal__qty-input" type="number" value="1" min="1" readonly />
+            <button type="button" class="product-modal__qty-btn" onclick="changeProductQuantity(1)">+</button>
+          </div>
+          <div class="product-modal__actions">
+            <button id="productModalAddBtn" type="button" class="btn btn--primary" onclick="addProductToCartFromModal()">
+              <i class="fa-solid fa-cart-plus"></i> Thêm vào giỏ
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .product-modal__body {
+    width: min(980px, calc(100vw - 28px));
+  }
+
+  .product-modal-card {
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.34);
+  }
+
+  .product-modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 24px;
+    border-bottom: 1px solid #efefef;
+  }
+
+  .product-modal__header h3 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 500;
+  }
+
+  .product-modal__close {
+    border: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #ececec;
+    color: #7d7d7d;
+    font-size: 22px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .product-modal__close:hover {
+    color: #ee4d2d;
+    transform: rotate(90deg);
+  }
+
+  .product-modal__content {
+    padding: 26px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+
+  .product-modal__left {
+    position: relative;
+  }
+
+  .product-modal__badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: linear-gradient(135deg, #ff6b7a, #f0485f);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 8px 16px;
+    border-radius: 999px;
+    box-shadow: 0 8px 14px rgba(240, 72, 95, 0.32);
+    z-index: 1;
+  }
+
+  .product-modal__image {
+    width: 100%;
+    height: 470px;
+    object-fit: contain;
+    background: #f6f6f6;
+    border-radius: 10px;
+  }
+
+  .product-modal__name {
+    margin: 0 0 10px;
+    font-size: 32px;
+    line-height: 1.3;
+    font-weight: 500;
+    color: #3c3c3c;
+  }
+
+  .product-modal__rating-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #606060;
+    margin-bottom: 18px;
+    font-size: 16px;
+  }
+
+  .product-modal__stars {
+    color: #f5b301;
+  }
+
+  .product-modal__score {
+    font-weight: 600;
+  }
+
+  .product-modal__reviews {
+    color: #767676;
+  }
+
+  .product-modal__sold i {
+    color: #ee4d2d;
+  }
+
+  .product-modal__price-box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 16px;
+    background: #fafafa;
+    border-radius: 10px;
+    margin-bottom: 16px;
+  }
+
+  .product-modal__price-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .product-modal__price--old {
+    color: #888;
+    text-decoration: line-through;
+    font-size: 20px;
+    margin-top: 6px;
+  }
+
+  .product-modal__price--new {
+    font-size: 36px;
+    color: #ee4d2d;
+    font-weight: 700;
+  }
+
+  .product-modal__discount {
+    background: #ee4d2d;
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .product-modal__description {
+    margin: 0 0 18px;
+    color: #555;
+    line-height: 1.6;
+    background: #fafafa;
+    padding: 16px;
+    border-left: 4px solid #ee4d2d;
+    border-radius: 10px;
+  }
+
+  .product-modal__description h5 {
+    margin: 0 0 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #404040;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .product-modal__description h5 i {
+    color: #ee4d2d;
+  }
+
+  .product-modal__description p {
+    margin: 0;
+    font-size: 16px;
+    color: #6a6a6a;
+  }
+
+  .product-modal__features {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .product-modal__feature {
+    background: #f7f7f7;
+    border-radius: 8px;
+    padding: 10px 12px;
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .product-modal__feature i {
+    color: #ee4d2d;
+    font-size: 18px;
+  }
+
+  .product-modal__qty {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+    font-size: 16px;
+    color: #555;
+    font-weight: 600;
+  }
+
+  .product-modal__qty i {
+    color: #ee4d2d;
+  }
+
+  .product-modal__qty-btn {
+    width: 48px;
+    height: 48px;
+    border: 1px solid #ddd;
+    background: #fff;
+    cursor: pointer;
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  .product-modal__qty-btn:hover {
+    background: #ee4d2d;
+    color: #fff;
+    border-color: #ee4d2d;
+  }
+
+  .product-modal__qty-input {
+    width: 64px;
+    height: 48px;
+    text-align: center;
+    border: 1px solid #ddd;
+    background: #fff;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .product-modal__actions {
+    display: flex;
+  }
+
+  #productModalAddBtn {
+    width: 100%;
+    height: 52px;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  @media (max-width: 900px) {
+    .product-modal__header h3 {
+      font-size: 24px;
+    }
+
+    .product-modal__content {
+      grid-template-columns: 1fr;
+      gap: 18px;
+      padding: 18px;
+    }
+
+    .product-modal__image {
+      height: 280px;
+    }
+
+    .product-modal__name {
+      font-size: 22px;
+    }
+
+    .product-modal__rating-row,
+    .product-modal__description p,
+    .product-modal__qty,
+    .product-modal__feature,
+    .product-modal__price--old,
+    .product-modal__discount,
+    #productModalAddBtn {
+      font-size: 16px;
+    }
+
+    .product-modal__price--new {
+      font-size: 34px;
+    }
+
+    .product-modal__description h5 {
+      font-size: 18px;
+    }
+
+    .product-modal__features {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .home-filter__btn.is-active {
+    background-color: #ee4d2d;
+    border-color: #ee4d2d;
+    color: #fff;
+  }
+
+  .select-input__link.select-input__link--active {
+    color: #ee4d2d;
+    font-weight: 600;
+  }
+
+  .auth-messages {
+    margin-top: 4px;
+    margin-bottom: 4px;
+  }
+
+  .auth-message {
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    border: 1px solid transparent;
+  }
+
+  .auth-message.error {
+    background: #fff1f0;
+    color: #b42318;
+    border-color: #fecaca;
+  }
+
+  .auth-message.success {
+    background: #ecfdf3;
+    color: #067647;
+    border-color: #a6f4c5;
+  }
+
+  .home-product-empty {
+    width: 100%;
+    margin-top: 10px;
+    padding: 28px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: #4b5563;
+    background: transparent;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+  }
+
+  .home-product-empty__icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: #ee4d2d;
+    background: rgba(238, 77, 45, 0.12);
+  }
+
+  .home-product-empty__title {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #374151;
+  }
+
+  .home-product-empty__desc {
+    font-size: 14px;
+    color: #6b7280;
+  }
+
+  .pagination-item--disabled .pagination-item__link,
+  .pagination-item--dots .pagination-item__link {
+    cursor: default;
+    pointer-events: none;
+    color: #b5b5b5;
+  }
+</style>
+</body>
+<script>
+
+  const API_KEY=''
+  const DEMO_AUTH_KEY = 'demo_auth_user';
+
+  // State trang hiện tại 
+  let pageState = {
+  currentPage: 1,
+  selectedCategory: '',
+  searchKeyword: '',
+  sortPrice: '',
+  sortMode: '',
+  isLoading: false,
+  pagination: {
+    page: 1,
+    limit: 10,
+    total: 0,
+    totalPages: 0,
+    hasNextPage: false,
+    hasPrevPage: false
+  }
+  };
+
+  let selectedProductForModal = null;
+  let abortController = null;
+  let searchDebounceTimer = null;
+  const REQUEST_TIMEOUT = 8000; // 8 seconds
+  const SEARCH_DEBOUNCE_DELAY = 500; // 500ms
+  
+  // Cache for filter results
+  const requestCache = new Map();
+
+  function formatRating(rating){
+    const num = Number(rating || 0);
+    if (num === Math.floor(num)) return num.toFixed(1);
+    const decimal = num % 1;
+    return decimal >= 0.5 ? (Math.floor(num) + 0.5).toFixed(1) : Math.floor(num).toFixed(1);
+  }
+
+  function renderStars(rating){
+    const num = Number(rating || 5);
+    const displayRating = parseFloat(formatRating(num));
+    const fullStars = Math.floor(displayRating);
+    const hasHalf = displayRating % 1 !== 0;
+    let stars = '<i class="fa-solid fa-star"></i>'.repeat(fullStars);
+    if (hasHalf) {
+      stars += '<i class="fa-solid fa-star-half-stroke"></i>';
+      stars += '<i class="fa-regular fa-star"></i>'.repeat(5 - fullStars - 1);
+    } else {
+      stars += '<i class="fa-regular fa-star"></i>'.repeat(5 - fullStars);
+    }
+    return stars;
+  }
+
+  async function fetchProducts(filters = {}){
+    try {
+      // Generate cache key
+      const cacheKey = JSON.stringify(filters);
+      
+      // Check cache first
+      if (requestCache.has(cacheKey)) {
+        console.log('Using cached results for:', cacheKey);
+        return requestCache.get(cacheKey);
+      }
+
+      const params = new URLSearchParams({ ...filters });
+      
+      // Create timeout promise
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Request timeout')), REQUEST_TIMEOUT)
+      );
+      
+      const fetchPromise = fetch(`/api/products?${params.toString()}`, {
+        signal: abortController?.signal
+      });
+      
+      const res = await Promise.race([fetchPromise, timeoutPromise]);
+      
+      if (!res.ok) {
+        throw new Error('Failed to fetch products');
+      }
+      const payload = await res.json();
+      const responseData = {
+        products: Array.isArray(payload.data) ? payload.data : [],
+        pagination: payload.pagination || {
+          page: Number(filters.page || 1),
+          limit: 10,
+          total: 0,
+          totalPages: 0,
+          hasNextPage: false,
+          hasPrevPage: false
+        }
+      };
+      
+      // Cache the result
+      requestCache.set(cacheKey, responseData);
+      
+      // Limit cache size to 20 entries
+      if (requestCache.size > 20) {
+        const firstKey = requestCache.keys().next().value;
+        requestCache.delete(firstKey);
+      }
+      
+      return responseData;
+    } catch (error){
+      if (error.name === 'AbortError') {
+        console.log('Products fetch cancelled');
+        return {
+          products: [],
+          pagination: {
+            page: Number(filters.page || pageState.currentPage || 1),
+            limit: 10,
+            total: 0,
+            totalPages: 0,
+            hasNextPage: false,
+            hasPrevPage: false
+          }
+        };
+      }
+      console.error('Error fetching products:', error);
+      return {
+        products: [],
+        pagination: {
+          page: Number(filters.page || pageState.currentPage || 1),
+          limit: 10,
+          total: 0,
+          totalPages: 0,
+          hasNextPage: false,
+          hasPrevPage: false
+        }
+      };
+    }
+  }
+  
+  async function fetchCategories(){
+    try {
+      const res = await fetch('/api/categories');
+      if (!res.ok) {
+        throw new Error('Failed to fetch categories');
+      }
+      const payload = await res.json();
+      return Array.isArray(payload.data) ? payload.data : [];
+    } catch (error){
+      console.error('Error fetching categories:', error);
+      return [];
+    }
+  }
+
+  function formatCurrency(value){
+    return Number(value || 0).toLocaleString('vi-VN') + 'Đ';
+  }
+
+  function calculateDiscountPercent(oldPrice, newPrice){
+    if (!oldPrice || oldPrice <= newPrice) return 0;
+    return Math.round(((oldPrice - newPrice) / oldPrice) * 100);
+  }
+
+  function getAuthToken(){
+    const raw = localStorage.getItem(DEMO_AUTH_KEY);
+    if (!raw) return '';
+    try {
+      const parsed = JSON.parse(raw);
+      if (typeof parsed === 'string') return parsed;
+      return parsed.token || parsed.accessToken || '';
+    } catch (error) {
+      return raw;
+    }
+  }
+
+  function renderProducts(products){
+    const productContainer = document.getElementById('productContainer');
+    if (!productContainer) return;
+
+    pageState.currentProducts = products;
+
+    if (!Array.isArray(products) || products.length === 0) {
+      productContainer.innerHTML = `
+        <div class="home-product-empty">
+          <span class="home-product-empty__icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+          <p class="home-product-empty__title">Không tìm thấy sản phẩm</p>
+          <p class="home-product-empty__desc">Thử từ khóa khác hoặc chọn danh mục khác nhé.</p>
+        </div>
+      `;
+      return;
+    }
+
+    const htmlString = products.map(product => {
+      const productName = product.name || 'San pham';
+      const newPrice = Number(product.price || 0);
+      const oldPrice = Number(product.old_price || product.oldPrice || 0);
+      const hasDiscount = oldPrice > 0 && oldPrice > newPrice;
+      const discountPercent = calculateDiscountPercent(oldPrice, newPrice);
+      const soldNumber = Number(product.sold_number || 0);
+      const productImage = String(product.image || 'static/image/adidas3_yU6oRwT.jpeg').replace(/\\/g, '/');
+      const brand = product.brand || 'SportClothes';
+      const country = product.country || 'Viet Nam';
+      const rating = Number(product.rating || 5);
+      
+      const oldPriceHtml = hasDiscount
+        ? `<span class="home-product-item__price--old">${formatCurrency(oldPrice)}</span>`
+        : '';
+      const saleOffHtml = hasDiscount
+        ? `<div class="home-product-item__sale-off">
+                <span class="home-product-item__sale-off-percent">${discountPercent}%</span>
+                <span class="home-product-item__sale-off-label">Giảm</span>
+            </div>`
+        : '';
+      
+      const starsHtml = renderStars(rating);
+      const displayRating = formatRating(rating);
+      
+      return `
+        <div class="grid__column-2-4">
+          <div class="home-product-item">
+            <div class="product-item" onclick="openProductModal('${product._id || ''}')">
+              <img class="home-product-item__img" src="${productImage}" alt="${productName}">
+              <h4 class="home-product-item__name">${productName}</h4>
+              <div class="home-product-item__price">
+                  ${oldPriceHtml}
+                  <span class="home-product-item__price--new">${formatCurrency(newPrice)}</span>
+              </div>
+              <div class="home-product-item__action">
+                <div class="home-product-item__rating">
+                  ${starsHtml}
+                  <span class="home-product-item__rating-number">${displayRating}/5</span>
+                </div>
+                <span class="home-product-item__sold-number">${soldNumber} đã bán</span>
+              </div>
+              <div class="home-product-item__origin">
+                <span class="home-product-item__brand">${brand}</span>
+                <span class="home-product-item__country">${country}</span>
+              </div>
+              ${saleOffHtml}
+            </div>
+          </div>
+        </div>
+        `;
+      }).join('');
+    productContainer.innerHTML = htmlString;
+  }
+
+  function buildVisiblePages(currentPage, totalPages) {
+    const pages = [];
+    const windowSize = 2;
+    const start = Math.max(1, currentPage - windowSize);
+    const end = Math.min(totalPages, currentPage + windowSize);
+
+    if (start > 1) pages.push(1);
+    if (start > 2) pages.push('dots-left');
+
+    for (let page = start; page <= end; page++) {
+      pages.push(page);
+    }
+
+    if (end < totalPages - 1) pages.push('dots-right');
+    if (end < totalPages) pages.push(totalPages);
+
+    return pages;
+  }
+
+  function renderPagination(meta){
+    const paginationEl = document.getElementById('productPagination');
+    if (!paginationEl) return;
+
+    const pagination = meta || {};
+    const currentPage = Math.max(Number(pagination.page || pageState.currentPage || 1), 1);
+    const totalPages = Math.max(Number(pagination.totalPages || 0), 0);
+
+    if (totalPages <= 1) {
+      paginationEl.innerHTML = '';
+      return;
+    }
+
+    const visiblePages = buildVisiblePages(currentPage, totalPages);
+    const prevDisabled = currentPage <= 1;
+    const nextDisabled = currentPage >= totalPages;
+
+    const prevHtml = `
+      <li class="pagination-item ${prevDisabled ? 'pagination-item--disabled' : ''}">
+        <a href="#" class="pagination-item__link" onclick="goToPage(${currentPage - 1}); event.preventDefault(); return false;">
+          <i class="pagination-item__icon fa-solid fa-angle-left"></i>
+        </a>
+      </li>
+    `;
+
+    const nextHtml = `
+      <li class="pagination-item ${nextDisabled ? 'pagination-item--disabled' : ''}">
+        <a href="#" class="pagination-item__link" onclick="goToPage(${currentPage + 1}); event.preventDefault(); return false;">
+          <i class="pagination-item__icon fa-solid fa-angle-right"></i>
+        </a>
+      </li>
+    `;
+
+    const pagesHtml = visiblePages.map((item) => {
+      if (typeof item !== 'number') {
+        return `
+          <li class="pagination-item pagination-item--dots">
+            <span class="pagination-item__link">...</span>
+          </li>
+        `;
+      }
+
+      const activeClass = item === currentPage ? 'pagination-item--active' : '';
+      return `
+        <li class="pagination-item ${activeClass}">
+          <a href="#" class="pagination-item__link" onclick="goToPage(${item}); event.preventDefault(); return false;">${item}</a>
+        </li>
+      `;
+    }).join('');
+
+    paginationEl.innerHTML = prevHtml + pagesHtml + nextHtml;
+  }
+
+  async function goToPage(page){
+    if (pageState.isLoading) return;
+
+    const targetPage = Number(page || 1);
+    const totalPages = Number(pageState.pagination?.totalPages || 0);
+    if (targetPage < 1) return;
+    if (totalPages > 0 && targetPage > totalPages) return;
+    if (targetPage === Number(pageState.currentPage || 1)) return;
+
+    pageState.currentPage = targetPage;
+    await loadProducts();
+
+    const appContent = document.querySelector('.app-content');
+    if (appContent) {
+      appContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+  
+  function renderCategories(categories){
+    const categoryContainer = document.getElementById('categoryContainer');
+    if (!categoryContainer) return;
+    const allActiveClass = pageState.selectedCategory ? '' : 'category-item--active';
+    const categoryHeaderText = `
+      <li class="category-item ${allActiveClass}" data-category-id="">
+        <a href="#" class="category-item__link category-item__link--all" data-category-id="" onclick="filterByCategory(''); event.preventDefault(); return false;">Tất cả</a>
+      </li>
+    `
+    const htmlString = categories.map(category => {
+      const isActive = String(pageState.selectedCategory) === String(category._id);
+      const activeClass = isActive ? 'category-item--active' : '';
+      return `
+        <li class="category-item ${activeClass}" data-category-id="${category._id}">
+            <a href="#" class="category-item__link" data-category-id="${category._id}" onclick="filterByCategory('${category._id}'); event.preventDefault(); return false;">${category.name}</a>
+        </li>
+      `
+    }).join('');
+    categoryContainer.innerHTML = categoryHeaderText + htmlString;
+    updateCategoryActiveState();
+  }
+
+  function updateCategoryActiveState(){
+    const items = document.querySelectorAll('#categoryContainer .category-item');
+    items.forEach(item => {
+      item.classList.remove('category-item--active');
+      const categoryId = String(item.getAttribute('data-category-id') || '');
+      const current = String(pageState.selectedCategory || '');
+      if (categoryId === current) {
+        item.classList.add('category-item--active');
+      }
+    });
+  }
+
+  function updateSortActiveState(){
+    const sortButtons = document.querySelectorAll('.home-filter__btn[data-sort-mode]');
+    const priceLinks = document.querySelectorAll('.select-input__link[data-sort-price]');
+    const priceLabel = document.querySelector('.select-input__label');
+
+    // Reset all buttons
+    sortButtons.forEach(button => button.classList.remove('is-active', 'btn--primary'));
+    priceLinks.forEach(link => link.classList.remove('select-input__link--active'));
+
+    const mode = String(pageState.sortMode || '');
+    const isNewestActive = !pageState.sortPrice && (mode === '' || mode === 'newest');
+    const isPopularActive = mode === 'popular';
+    const isSoldActive = mode === 'sold';
+
+    // Cache selectors in one batch
+    const newestBtn = document.querySelector('.home-filter__btn[data-sort-mode="newest"]');
+    const popularBtn = document.querySelector('.home-filter__btn[data-sort-mode="popular"]');
+    const soldBtn = document.querySelector('.home-filter__btn[data-sort-mode="sold"]');
+
+    // Add active classes in one batch
+    if (newestBtn && isNewestActive) newestBtn.classList.add('is-active', 'btn--primary');
+    if (popularBtn && isPopularActive) popularBtn.classList.add('is-active', 'btn--primary');
+    if (soldBtn && isSoldActive) soldBtn.classList.add('is-active', 'btn--primary');
+
+    // Update price links
+    priceLinks.forEach(link => {
+      const value = String(link.getAttribute('data-sort-price') || '');
+      if (value === pageState.sortPrice) {
+        link.classList.add('select-input__link--active');
+      }
+    });
+
+    // Update price label
+    if (priceLabel) {
+      if (pageState.sortPrice === 'asc') {
+        priceLabel.textContent = 'Giá: Thấp đến cao';
+      } else if (pageState.sortPrice === 'desc') {
+        priceLabel.textContent = 'Giá: Cao đến thấp';
+      } else {
+        priceLabel.textContent = 'Giá';
+      }
+    }
+  }
+
+  async function loadProducts(){
+    // Clear pending search debounce timer
+    if (searchDebounceTimer) {
+      clearTimeout(searchDebounceTimer);
+      searchDebounceTimer = null;
+    }
+
+    // Cancel previous request if any
+    if (abortController) {
+      abortController.abort();
+    }
+    abortController = new AbortController();
+
+    pageState.isLoading = true;
+    disableSortButtons(true);
+
+    try {
+      const soldSortValue = pageState.sortMode === 'sold' ? 'desc' : '';
+      const popularSortValue = pageState.sortMode === 'popular' ? 'desc' : '';
+
+      const result = await fetchProducts({
+        category: pageState.selectedCategory,
+        search: pageState.searchKeyword,
+        sortByPrice: pageState.sortPrice,
+        sortBySold_number: soldSortValue,
+        sortByPopular: popularSortValue,
+        page: pageState.currentPage
+      });
+
+      const products = Array.isArray(result.products) ? result.products : [];
+      const pagination = result.pagination || {
+        page: pageState.currentPage,
+        limit: 10,
+        total: products.length,
+        totalPages: products.length > 0 ? 1 : 0,
+        hasNextPage: false,
+        hasPrevPage: pageState.currentPage > 1
+      };
+
+      pageState.pagination = pagination;
+      pageState.currentPage = Number(pagination.page || pageState.currentPage || 1);
+
+      renderProducts(products);
+      renderPagination(pagination);
+    } finally {
+      pageState.isLoading = false;
+      disableSortButtons(false);
+    }
+  }
+
+  function disableSortButtons(disabled) {
+    const buttons = document.querySelectorAll('.home-filter__btn');
+    buttons.forEach(btn => {
+      btn.style.opacity = disabled ? '0.6' : '1';
+      btn.style.pointerEvents = disabled ? 'none' : 'auto';
+      btn.style.cursor = disabled ? 'wait' : 'pointer';
+    });
+  }
+
+  // Category Handler
+  async function filterByCategory(categoryId){
+    if (pageState.isLoading) return;
+    if (String(pageState.selectedCategory || '') === String(categoryId || '') && pageState.currentPage === 1) {
+      return;
+    }
+    pageState.selectedCategory = categoryId;
+    pageState.currentPage = 1;
+    
+    // Clear cache on category change
+    requestCache.clear();
+    
+    updateCategoryActiveState();
+    updateSortActiveState();
+    await loadProducts();
+  }
+
+  // Search Handler
+  async function filterBySearch(keyword){
+    if (pageState.isLoading) return;
+    
+    // Only trigger if keyword actually changed
+    if (pageState.searchKeyword === keyword) return;
+    
+    pageState.searchKeyword = keyword;
+    pageState.currentPage = 1;
+    
+    // Clear cache for new search
+    requestCache.clear();
+    
+    updateSortActiveState();
+    await loadProducts();
+  }
+
+  // Sort Handler
+  async function filterBySort(sortType, sortValue){
+    // Prevent multiple clicks while loading
+    if (pageState.isLoading) return;
+
+    if (sortType === 'price') {
+      pageState.sortPrice = sortValue;
+      pageState.sortMode = '';
+    } else {
+      pageState.sortMode = sortValue;
+      pageState.sortPrice = '';
+    }
+    pageState.currentPage = 1;
+    
+    // Clear cache on sort change
+    requestCache.clear();
+    
+    updateSortActiveState();
+    await loadProducts();
+  }
+  
+  function handleSearch(event){
+    event.preventDefault();
+    const keyword = document.getElementById('searchInput').value.trim();
+    
+    // Clear previous debounce timer
+    if (searchDebounceTimer) {
+      clearTimeout(searchDebounceTimer);
+    }
+    
+    // Set new debounce timer
+    searchDebounceTimer = setTimeout(() => {
+      if (keyword !== pageState.searchKeyword) {
+        filterBySearch(keyword);
+      }
+    }, SEARCH_DEBOUNCE_DELAY);
+    
+    return false;
+  }
+
+  async function initHomeData(){
+    const categories = await fetchCategories();
+    renderCategories(categories);
+    updateSortActiveState();
+    await loadProducts();
+    console.log('Home data initialized');
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    initHomeData(); 
+    checkLoginStatus();
+    renderCartItem();
+  });
+
+  function checkLoginStatus(){
+    const token = getAuthToken()
+    const isLogin = Boolean(token);
+    const authContainer = document.getElementById('authContainer');
+
+    if (!isLogin) {
+      authContainer.innerHTML = `
+        <li class="header__nav-item header__nav-item--bold header__nav-item--slash" id="signupNavItem">
+          <a href="#" id="signupNavLink" onclick="openSignupModal(); return false;" class="header__nav-item-btn">Đăng ký</a>
+        </li>
+        <li class="header__nav-item header__nav-item--bold" id="signinNavItem">
+          <a href="#" id="signinNavLink" onclick="openSigninModal(); return false;" class="header__nav-item-btn">Đăng nhập</a>
+        </li>
+      `
+    } else {
+      authContainer.innerHTML = `
+        <li class="header__nav-item header__nav-item--bold" id="signinNavItem">
+          <i class="fas fa-user"></i>
+          <a href="/profile" class="header__nav-item-btn">Tài khoản của tôi</a>
+          <ul class="header__user-menu">
+            <li class="header__user-item">
+              <a href="/profile" class="header__user-link"><i class="fas fa-user" style="width:16px;"></i> Tài khoản của tôi</a>
+            </li>
+            <li class="header__user-item">
+              <a href="/profile#orders" class="header__user-link"><i class="fas fa-shopping-bag" style="width:16px;"></i> Đơn mua</a>
+            </li>
+            <li class="header__user-item">
+              <a href="/profile#address" class="header__user-link"><i class="fas fa-map-marker-alt" style="width:16px;"></i> Địa chỉ của tôi</a>
+            </li>
+            <li class="header__user-item">
+              <a href="/" class="header__user-link" onclick="quickLogout(); return false;"><i class="fas fa-sign-out-alt" style="width:16px;"></i> Đăng xuất</a>
+            </li>
+          </ul>
+        </li> `
+    }
+  }
+
+  function quickLogout() {
+    localStorage.removeItem(DEMO_AUTH_KEY);
+    window.location.href = '/';
+  }
+
+  function openSigninModal() {
+    closeSignupModal();
+    clearAuthMessage('signinMessages');
+    document.getElementById('signinModal').classList.remove('hide');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeSigninModal() {
+    clearAuthMessage('signinMessages');
+    document.getElementById('signinModal').classList.add('hide');
+    document.body.style.overflow = 'auto';
+  }
+
+  function openSignupModal() {
+    closeSigninModal();
+    clearAuthMessage('signupMessages');
+    document.getElementById('signupModal').classList.remove('hide');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeSignupModal() {
+    clearAuthMessage('signupMessages');
+    document.getElementById('signupModal').classList.add('hide');
+    document.body.style.overflow = 'auto';
+  }
+
+  function showAuthMessage(containerId, messages, type = 'error') {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    container.style.display = 'block';
+    
+    // Nếu messages là array, hiển thị tất cả
+    if (Array.isArray(messages)) {
+      container.innerHTML = messages.map(msg => `<div class="auth-message ${type}">${msg}</div>`).join('');
+    } else {
+      container.innerHTML = `<div class="auth-message ${type}">${messages}</div>`;
+    }
+  }
+
+  function clearAuthMessage(containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    container.innerHTML = '';
+    container.style.display = 'none';
+  }
+
+  function fillProductModal(product){
+    const productName = product.name || 'Sản phẩm';
+    const newPrice = Number(product.price || 0);
+    const oldPrice = Number(product.old_price || product.oldPrice || 0);
+    const discountPercent = calculateDiscountPercent(oldPrice, newPrice);
+    const rating = Number(product.rating || 0);
+    const soldNumber = Number(product.sold_number || 0);
+    const image = String(product.image || 'static/image/adidas3_yU6oRwT.jpeg').replace(/\\/g, '/');
+
+    document.getElementById('productModalName').textContent = productName;
+    document.getElementById('productModalImage').src = image;
+    document.getElementById('productModalImage').alt = productName;
+    document.getElementById('productModalStars').innerHTML = renderStars(rating);
+    document.getElementById('productModalRating').textContent = formatRating(rating);
+    document.getElementById('productModalReviews').textContent = Number(product.review_count || 0);
+    document.getElementById('productModalSold').textContent = soldNumber;
+    document.getElementById('productModalOldPrice').textContent = oldPrice > newPrice ? formatCurrency(oldPrice) : '';
+    document.getElementById('productModalNewPrice').textContent = formatCurrency(newPrice);
+    document.getElementById('productModalDiscount').textContent = discountPercent > 0 ? `-${discountPercent}%` : '';
+    document.getElementById('productModalDescription').textContent = product.description || 'Đang cập nhật mô tả sản phẩm...';
+    document.getElementById('productModalQuantity').value = 1;
+  }
+
+  async function openProductModal(productId) {
+    const id = String(productId || '').trim();
+    if (!id) return;
+
+    let product = Array.isArray(pageState.currentProducts)
+      ? pageState.currentProducts.find(p => String(p._id) === id)
+      : null;
+
+    if (!product) {
+      try {
+        const res = await fetch(`/api/products/${encodeURIComponent(id)}`);
+        if (!res.ok) throw new Error('Failed to load product details');
+        const payload = await res.json();
+        product = payload.data || null;
+      } catch (error) {
+        console.error(error);
+        alert('Không tải được thông tin sản phẩm');
+        return;
+      }
+    }
+
+    selectedProductForModal = product;
+    fillProductModal(product);
+
+    document.getElementById('productModal').classList.remove('hide');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeProductModal() {
+    selectedProductForModal = null;
+    document.getElementById('productModal').classList.add('hide');
+    document.body.style.overflow = 'auto';
+  }
+
+  function changeProductQuantity(delta){
+    const input = document.getElementById('productModalQuantity');
+    const current = Math.max(Number(input.value || 1), 1);
+    const next = Math.max(current + delta, 1);
+    input.value = next;
+  }
+
+  async function addProductToCartFromModal(){
+    if (!selectedProductForModal || !selectedProductForModal._id) {
+      alert('Không tìm thấy sản phẩm để thêm vào giỏ');
+      return;
+    }
+
+    const token = getAuthToken();
+    if (!token) {
+      alert('Bạn cần đăng nhập trước khi thêm vào giỏ hàng');
+      openSigninModal();
+      return;
+    }
+
+    const quantity = Math.max(parseInt(document.getElementById('productModalQuantity').value, 10) || 1, 1);
+    const button = document.getElementById('productModalAddBtn');
+    const previousText = button.textContent;
+    button.disabled = true;
+    button.textContent = 'Đang thêm...';
+
+    try {
+      const res = await fetch(`/api/cart/${encodeURIComponent(selectedProductForModal._id)}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ quantity })
+      });
+
+      const payload = await res.json();
+      if (!res.ok || payload.success === false) {
+        throw new Error(payload.message || 'Thêm vào giỏ thất bại');
+      }
+
+      await loadCartItem();
+      alert('Đã thêm vào giỏ hàng');
+      closeProductModal();
+    } catch (error) {
+      console.error(error);
+      alert(error.message || 'Có lỗi xảy ra khi thêm vào giỏ hàng');
+    } finally {
+      button.disabled = false;
+      button.textContent = previousText;
+    }
+  }
+
+  document.addEventListener('keydown', function(event){
+    if (event.key === 'Escape') {
+      const productModal = document.getElementById('productModal');
+      if (productModal && !productModal.classList.contains('hide')) {
+        closeProductModal();
+      }
+    }
+  });
+
+  document.addEventListener('submit', async function(event){
+    if (event.target.id === 'signupForm') {
+      event.preventDefault();
+      clearAuthMessage('signupMessages');
+      const email = document.getElementById('signupEmail').value.trim();
+      const password = document.getElementById('signupPassword').value.trim();
+      const confirmPassword = document.getElementById('signupConfirmPassword').value.trim();
+      const errors = [];
+
+      // Kiểm tra validation
+      if (!email) errors.push('Vui lòng nhập email');
+      if (!password) errors.push('Vui lòng nhập mật khẩu');
+      if (!confirmPassword) errors.push('Vui lòng xác nhận mật khẩu');
+      if (password && confirmPassword && password !== confirmPassword) errors.push('Mật khẩu xác nhận không khớp');
+
+      if (errors.length > 0) {
+        showAuthMessage('signupMessages', errors, 'error');
+        return;
+      }
+
+      try {
+        const request = await fetch('/auth/sign-up', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email, password, confirmPassword })
+        });
+
+        const data = await request.json();
+        if (!request.ok || data.success === false) {
+          throw new Error(data.error || data.message || 'Đăng ký thất bại');
+        }
+
+        showAuthMessage('signupMessages', 'Đăng ký thành công! Vui lòng đăng nhập.', 'success');
+        setTimeout(function(){
+          closeSignupModal();
+          openSigninModal();
+        }, 900);
+      } catch (error) {
+        console.error('Error during signup:', error);
+        showAuthMessage('signupMessages', error.message || 'Có lỗi xảy ra trong quá trình đăng ký', 'error');
+      }
+
+      return;
+    }
+
+    if (event.target.id === 'signinForm') {
+      event.preventDefault();
+      clearAuthMessage('signinMessages');
+      const email = document.getElementById('signinEmail').value.trim();
+      const password = document.getElementById('signinPassword').value.trim();
+      const errors = [];
+
+      // Kiểm tra validation
+      if (!email) errors.push('Vui lòng nhập email');
+      if (!password) errors.push('Vui lòng nhập mật khẩu');
+
+      if (errors.length > 0) {
+        showAuthMessage('signinMessages', errors, 'error');
+        return;
+      }
+
+      try {
+        const request = await fetch('/auth/sign-in', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await request.json();
+        if (!request.ok || data.success === false) {
+          throw new Error(data.error || data.message || 'Đăng nhập thất bại');
+        }
+
+        const token = data?.data?.token || data?.token || data?.accessToken || '';
+        localStorage.setItem(DEMO_AUTH_KEY, JSON.stringify(token));
+        showAuthMessage('signinMessages', 'Đăng nhập thành công!', 'success');
+        setTimeout(function(){
+          closeSigninModal();
+          checkLoginStatus();
+          renderCartItem();
+        }, 700);
+      } catch (error) {
+        console.error('Error during signin:', error);
+        showAuthMessage('signinMessages', error.message || 'Có lỗi xảy ra trong quá trình đăng nhập', 'error');
+      }
+    }
+  });
+
+  const cartWrapper = document.getElementById('cartWrapper');
+  const cartDropdown = document.getElementById('cartDropdown');
+
+  async function fetchCartItems(){
+    const token = getAuthToken();
+    if (!token) return [];
+    try {
+      const res = await fetch('/api/cart', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      if (!res.ok) {
+        throw new Error('Failed to fetch cart items');
+      }
+      const data = await res.json();
+      return Array.isArray(data.data) ? data.data : [];
+    } catch (error) {
+      console.error('Error fetching cart items:', error);
+      return [];
+    }
+  }
+
+  async function updateCartItemQuantity(cartItemId, quantity){
+    const token = getAuthToken();
+    if (!token) throw new Error('Bạn cần đăng nhập để cập nhật giỏ hàng');
+
+    const safeQuantity = Math.max(parseInt(quantity, 10) || 1, 1);
+    const res = await fetch(`/api/cart/${encodeURIComponent(cartItemId)}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ quantity: safeQuantity })
+    });
+
+    const payload = await res.json();
+    if (!res.ok || payload.success === false) {
+      throw new Error(payload.message || 'Không thể cập nhật số lượng');
+    }
+  }
+
+  async function deleteCartItem(productId){
+    const token = getAuthToken();
+    if (!token) throw new Error('Bạn cần đăng nhập để xóa sản phẩm');
+
+    const res = await fetch(`/api/cart/${encodeURIComponent(productId)}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    const payload = await res.json();
+    if (!res.ok || payload.success === false) {
+      throw new Error(payload.message || 'Không thể xóa sản phẩm khỏi giỏ hàng');
+    }
+  }
+
+  async function changeCartItemQuantity(cartItemId, nextQuantity, event){
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    const safeNextQuantity = Math.max(parseInt(nextQuantity, 10) || 1, 1);
+    const trigger = event?.currentTarget;
+    if (trigger) trigger.disabled = true;
+
+    try {
+      await updateCartItemQuantity(cartItemId, safeNextQuantity);
+      await renderCartItem();
+    } catch (error) {
+      console.error(error);
+      alert(error.message || 'Cập nhật số lượng thất bại');
+    } finally {
+      if (trigger) trigger.disabled = false;
+    }
+  }
+
+  async function removeCartItem(productId, event){
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    const shouldDelete = confirm('Bạn có chắc muốn xóa sản phẩm này khỏi giỏ hàng?');
+    if (!shouldDelete) return;
+
+    const trigger = event?.currentTarget;
+    if (trigger) trigger.disabled = true;
+
+    try {
+      await deleteCartItem(productId);
+      await renderCartItem();
+    } catch (error) {
+      console.error(error);
+      alert(error.message || 'Xóa sản phẩm thất bại');
+    } finally {
+      if (trigger) trigger.disabled = false;
+    }
+  }
+
+  async function renderCartItem() {
+    const cartDropdown = document.getElementById("cartDropdown");
+    const token = getAuthToken(); // Giả sử bạn đã có hàm này
+
+    // Hàm phụ trợ để render giỏ hàng trống
+    const renderEmpty = () => {
+      cartDropdown.classList.add("header__cart-list--empty");
+      cartDropdown.innerHTML = `
+        <img src="static/image/empty-shopping-cart.png" alt="Empty Cart" class="empty-cart-image" />
+        <p class="empty-cart-message">Chưa có sản phẩm</p>
+      `;
+    };
+
+    if (!token) {
+      renderEmpty();
+      return;
+    }
+
+    const items = await fetchCartItems(); // Giả sử bạn đã có hàm này
+    
+    if (!Array.isArray(items) || items.length === 0) {
+      renderEmpty();
+      return;
+    }
+
+    cartDropdown.classList.remove("header__cart-list--empty");
+    
+    const htmlString = items.map((item) => {
+
+      const product = item.product || {};
+      const cartItemId = item._id || '';
+      const productId = product._id || '';
+      const name = product.name || "Sản phẩm";
+      const price = Number(product.price || 0);
+      const quantity = Number(item.quantity || 1);
+      const image = String(product.image || "static/image/adidas3_yU6oRwT.jpeg").replace(/\\/g, "/");
+      return `
+        <li class="header__cart-item" onclick="openProductModal('${productId}')" >
+          <img src="${image}" alt="${name}" class="header__cart-img">
+          <div class="header__cart-item-info">
+            <div class="header__cart-item-head">
+              <h5 class="header__cart-item-name">${name}</h5>
+              <div class="header__cart-item-right">
+                <span class="header__cart-item-price">${formatCurrency(price)}</span>
+                <div class="header__cart-item-controls">
+                  <div class="header__cart-qty">
+                    <button type="button" class="header__cart-qty-btn" onclick="changeCartItemQuantity('${cartItemId}', ${Math.max(quantity - 1, 1)}, event)">-</button>
+                    <span class="header__cart-item-qnt">${quantity}</span>
+                    <button type="button" class="header__cart-qty-btn" onclick="changeCartItemQuantity('${cartItemId}', ${quantity + 1}, event)">+</button>
+                  </div>
+                  <button type="button" class="header__cart-remove-btn" onclick="removeCartItem('${productId}', event)" aria-label="Xóa sản phẩm">
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+      `;
+    }).join("");
+
+    cartDropdown.innerHTML = `
+      <h4 class="header__cart-heading">Sản phẩm đã thêm</h4>
+      <ul class="header__cart-list-item">
+        ${htmlString}
+      </ul>
+      <a href="/profile#cart" class="view-cart">Xem giỏ hàng</a>
+    `;
+  }
+
+  async function loadCartItem() {
+    await renderCartItem();
+  }
+
+</script>
+</html>

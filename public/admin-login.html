@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <style>
+        :root {
+            --bg-start: #eaf2ff;
+            --bg-end: #f6fbff;
+            --card-bg: #ffffff;
+            --text-main: #17304a;
+            --text-muted: #5f7185;
+            --primary: #0f6bdc;
+            --primary-hover: #0a56b4;
+            --danger-bg: #fff1f3;
+            --danger-text: #b4233d;
+            --danger-border: #f4b8c3;
+            --success-bg: #e9f9ef;
+            --success-text: #147a42;
+            --success-border: #bde8c8;
+            --border: #d6e3f1;
+            --shadow: 0 20px 48px rgba(26, 62, 114, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(circle at 20% 15%, #dcecff 0%, transparent 40%),
+                        linear-gradient(145deg, var(--bg-start), var(--bg-end));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: var(--text-main);
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 440px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .login-header {
+            padding: 24px 24px 18px;
+            background: linear-gradient(135deg, #0f6bdc, #1f8fff);
+            color: #fff;
+        }
+
+        .login-header h1 {
+            font-size: 24px;
+            margin-bottom: 6px;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+        }
+
+        .login-header p {
+            font-size: 14px;
+            opacity: 0.92;
+        }
+
+        .login-body {
+            padding: 22px 24px 24px;
+        }
+
+        .message {
+            display: none;
+            margin-bottom: 14px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid transparent;
+            font-size: 14px;
+        }
+
+        .message.show {
+            display: block;
+        }
+
+        .message.error {
+            background: var(--danger-bg);
+            color: var(--danger-text);
+            border-color: var(--danger-border);
+        }
+
+        .message.success {
+            background: var(--success-bg);
+            color: var(--success-text);
+            border-color: var(--success-border);
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        input {
+            width: 100%;
+            border: 1px solid #cfdbe8;
+            border-radius: 10px;
+            padding: 12px 12px;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.2s;
+            color: var(--text-main);
+            background: #fbfdff;
+        }
+
+        input:focus {
+            border-color: #68a8f8;
+            box-shadow: 0 0 0 3px rgba(15, 107, 220, 0.15);
+            background: #fff;
+        }
+
+        .submit-btn {
+            width: 100%;
+            border: none;
+            border-radius: 12px;
+            background: var(--primary);
+            color: #fff;
+            padding: 12px 14px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 700;
+            transition: all 0.2s;
+            margin-top: 8px;
+        }
+
+        .submit-btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .links {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 14px;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .links a {
+            color: #0d5ab9;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <div class="login-header">
+            <h1>Admin Login</h1>
+            <p>Đăng nhập để truy cập khu vực quản trị.</p>
+        </div>
+        <div class="login-body">
+            <div id="loginMessage" class="message"></div>
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input id="email" type="email" placeholder="admin@example.com" required autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Mật khẩu</label>
+                    <input id="password" type="password" placeholder="Nhập mật khẩu" required autocomplete="current-password">
+                </div>
+                <button id="submitBtn" class="submit-btn" type="submit">Đăng nhập admin</button>
+            </form>
+            <div class="links">
+                <a href="/index.html">Về trang chủ</a>
+                <a href="/admin.html">Thử vào dashboard</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const DEMO_AUTH_KEY = 'demo_auth_user';
+        const form = document.getElementById('adminLoginForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const messageEl = document.getElementById('loginMessage');
+
+        function showMessage(message, type) {
+            messageEl.textContent = message;
+            messageEl.className = `message show ${type}`;
+        }
+
+        function getReasonFromQuery() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('reason') || '';
+        }
+
+        async function loginAdmin(email, password) {
+            const res = await fetch('/auth/sign-in', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+
+            const payload = await res.json().catch(() => ({}));
+            if (!res.ok) {
+                throw new Error(payload?.message || 'Đăng nhập thất bại');
+            }
+
+            const role = String(payload?.data?.user?.role || '').toLowerCase();
+            if (role !== 'admin') {
+                throw new Error('Tài khoản này không có quyền admin');
+            }
+
+            const token = payload?.data?.token || '';
+            if (!token) {
+                throw new Error('Không nhận được token đăng nhập');
+            }
+
+            localStorage.setItem(DEMO_AUTH_KEY, JSON.stringify({
+                token,
+                user: payload?.data?.user || null,
+                savedAt: new Date().toISOString()
+            }));
+        }
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Đang xử lý...';
+            messageEl.className = 'message';
+            messageEl.textContent = '';
+
+            try {
+                await loginAdmin(email, password);
+                showMessage('Đăng nhập thành công. Đang chuyển hướng...', 'success');
+                setTimeout(() => {
+                    window.location.href = '/admin.html';
+                }, 500);
+            } catch (error) {
+                showMessage(error.message || 'Đăng nhập thất bại', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Đăng nhập admin';
+            }
+        });
+
+        (function init() {
+            const reason = getReasonFromQuery();
+            if (reason) {
+                showMessage(reason, 'error');
+            }
+        })();
+    </script>
+</body>
+</html>
